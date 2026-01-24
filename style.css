@@ -1,0 +1,558 @@
+/* ========== ESTILOS PARA EL MÓDULO DE COMPRAS ========== */
+
+/* Pestañas de productos */
+.product-tabs {
+    display: flex;
+    background-color: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.product-tab {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.product-tab:hover {
+    background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.08);
+}
+
+.product-tab.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.product-tab-content {
+    display: none;
+}
+
+.product-tab-content.active {
+    display: block;
+}
+
+/* Pestañas de compras */
+.purchase-tabs {
+    display: flex;
+    background-color: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.purchase-tab {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    font-weight: 600;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.purchase-tab:hover {
+    background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.08);
+}
+
+.purchase-tab.active {
+    background-color: var(--primary);
+    color: white;
+}
+
+.purchase-tab-content {
+    display: none;
+}
+
+.purchase-tab-content.active {
+    display: block;
+}
+
+/* Controles de inventario */
+.inventory-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 14px;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+/* Estado de inventario */
+.stock-status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 80px;
+    text-align: center;
+}
+
+.stock-ok {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.stock-low {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.stock-out {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Grid de recetas */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.recipe-card {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.recipe-header h4 {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.recipe-cost {
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.recipe-ingredients {
+    margin-top: 15px;
+}
+
+.recipe-ingredient {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.recipe-ingredient:last-child {
+    border-bottom: none;
+}
+
+.ingredient-name {
+    font-size: 14px;
+}
+
+.ingredient-quantity {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+/* Selector de proveedores */
+.supplier-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.supplier-card {
+    border: 2px solid #ddd;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--card-background);
+}
+
+.supplier-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+}
+
+.supplier-card.selected {
+    border-color: var(--primary);
+    background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.1);
+}
+
+.supplier-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.supplier-phone {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.supplier-products {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Productos de compra */
+.purchase-product-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1px solid #eee;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+    gap: 15px;
+}
+
+.purchase-product-info {
+    flex: 1;
+}
+
+.purchase-product-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.purchase-quantity-input {
+    width: 80px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+/* Opciones de compartir */
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.share-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    text-align: center;
+    height: 120px;
+}
+
+.share-option:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.share-option i {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.share-option span {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.share-option small {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Configuración */
+.config-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.config-option input[type="checkbox"] {
+    margin-top: 5px;
+}
+
+.config-option label {
+    flex: 1;
+}
+
+.config-option label strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.config-option label small {
+    display: block;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* Notificaciones */
+.notification.warning {
+    background-color: var(--warning);
+    color: #856404;
+}
+
+.notification.warning i {
+    color: #856404;
+}
+
+/* Productos en proveedor */
+.supplier-product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin-bottom: 5px;
+}
+
+.supplier-product-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* Conversiones */
+.conversion-info {
+    padding: 8px;
+    background-color: #e7f3ff;
+    border-radius: var(--border-radius);
+    color: var(--info);
+    font-size: 12px;
+}
+
+.conversion-info i {
+    margin-right: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .product-tabs, .purchase-tabs {
+        flex-direction: column;
+    }
+    
+    .product-tab, .purchase-tab {
+        padding: 10px;
+    }
+    
+    .inventory-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-box {
+        min-width: 100%;
+    }
+    
+    .filter-buttons {
+        justify-content: center;
+    }
+    
+    .recipes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .supplier-selector {
+        grid-template-columns: 1fr;
+    }
+    
+    .share-options {
+        grid-template-columns: 1fr;
+    }
+    
+    .purchase-product-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .purchase-product-controls {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .config-option {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .supplier-product-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .supplier-product-actions {
+        align-self: flex-end;
+    }
+}
+
+/* Estilos para scroll suave */
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Estilos para tooltips */
+[title] {
+    position: relative;
+}
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark);
+    color: white;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+}
+
+/* Animaciones adicionales */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 10px;
+}
+
+.badge-success {
+    background-color: var(--success);
+    color: white;
+}
+
+.badge-warning {
+    background-color: var(--warning);
+    color: #212529;
+}
+
+.badge-danger {
+    background-color: var(--danger);
+    color: white;
+}
+
+.badge-info {
+    background-color: var(--info);
+    color: white;
+}
+
+/* Panel de costo */
+.cost-panel {
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.cost-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.cost-row.total {
+    border-top: 2px solid #dee2e6;
+    margin-top: 5px;
+    padding-top: 10px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Estados de pedido */
+.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-sent {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
