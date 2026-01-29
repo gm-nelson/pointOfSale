@@ -7,1091 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <style>
-        :root {
-            --primary: #FF6B35;
-            --primary-dark: #E55A2B;
-            --secondary: #004E89;
-            --light: #F8F9FA;
-            --dark: #212529;
-            --success: #28A745;
-            --danger: #DC3545;
-            --warning: #FFC107;
-            --info: #17A2B8;
-            --border-radius: 10px;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --background-color: #f5f7fa;
-            --text-color: #212529;
-            --card-background: white;
-            --button-text: white;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: var(--transition);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        /* ========== HEADER MEJORADO ========== */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border-radius: var(--border-radius);
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            gap: 15px;
-            min-height: 80px;
-        }
-
-        .logo-container {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--primary);
-            font-weight: bold;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            transition: var(--transition);
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .business-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .business-info h1 {
-            font-size: 20px;
-            margin-bottom: 4px;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .business-info p {
-            opacity: 0.9;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .business-info i {
-            font-size: 12px;
-        }
-
-        .config-btn {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 14px;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
-        }
-
-        .config-btn:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .config-btn i {
-            font-size: 16px;
-        }
-
-        /* ========== TABS MEJORADAS ========== */
-        .tabs {
-            display: flex;
-            background-color: white;
-            border-radius: var(--border-radius);
-            margin-bottom: 25px;
-            box-shadow: var(--shadow);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding: 5px;
-        }
-
-        .tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab {
-            flex: 1;
-            min-width: 120px;
-            padding: 14px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-color);
-            border-radius: 8px;
-            margin: 0 2px;
-            white-space: nowrap;
-        }
-
-        .tab:hover {
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.08);
-        }
-
-        .tab.active {
-            color: var(--primary);
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.1);
-            position: relative;
-        }
-
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10%;
-            width: 80%;
-            height: 3px;
-            background-color: var(--primary);
-            border-radius: 2px;
-        }
-
-        .tab-content {
-            display: none;
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ========== BOTONES RESPONSIVE ========== */
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: var(--secondary);
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .section-title span {
-            font-weight: 700;
-        }
-
-        .btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: var(--button-text);
-            font-size: 14px;
-            min-height: 44px;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.3);
-        }
-
-        .btn-success {
-            background-color: var(--success);
-        }
-
-        .btn-danger {
-            background-color: var(--danger);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-        }
-
-        .btn-info {
-            background-color: var(--info);
-        }
-
-        .btn-warning {
-            background-color: var(--warning);
-        }
-
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 13px;
-            min-height: 36px;
-        }
-
-        /* ========== MEJORAS PARA MÓVILES ========== */
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-            -webkit-overflow-scrolling: touch;
-            border-radius: var(--border-radius);
-            background: var(--card-background);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 600px;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(0,0,0,0.08);
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.02);
-            font-weight: 600;
-            color: var(--secondary);
-            font-size: 14px;
-        }
-
-        tr:hover {
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.03);
-        }
-
-        .status {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            display: inline-block;
-            min-width: 100px;
-            text-align: center;
-        }
-
-        .actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: nowrap;
-        }
-
-        .actions .btn-sm {
-            padding: 6px 10px;
-            min-width: 36px;
-        }
-
-        /* ========== MODALES RESPONSIVE ========== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            animation: fadeIn 0.3s ease;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            width: 100%;
-            max-width: 600px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.3s ease;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            background: var(--card-background);
-            z-index: 1;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .modal-header h2 {
-            font-size: 20px;
-            color: var(--text-color);
-            margin: 0;
-        }
-
-        /* ========== PRODUCT GRID RESPONSIVE ========== */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .product-card {
-            border: 1px solid rgba(0,0,0,0.1);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-            background-color: var(--card-background);
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .product-img {
-            height: 120px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            color: var(--primary);
-        }
-
-        .product-info {
-            padding: 12px;
-        }
-
-        .product-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--text-color);
-            font-size: 14px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .product-price {
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        /* ========== MEDIA QUERIES ========== */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header-content {
-                flex-wrap: wrap;
-                padding: 12px;
-                gap: 12px;
-                min-height: auto;
-            }
-            
-            .logo {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-                border-radius: 10px;
-            }
-            
-            .business-info h1 {
-                font-size: 18px;
-            }
-            
-            .business-info p {
-                font-size: 12px;
-            }
-            
-            .config-btn {
-                padding: 8px 12px;
-                font-size: 13px;
-                margin-left: auto;
-            }
-            
-            .config-btn span {
-                display: none;
-            }
-            
-            .config-btn i {
-                font-size: 18px;
-                margin: 0;
-            }
-            
-            .tabs {
-                padding: 4px;
-            }
-            
-            .tab {
-                min-width: 100px;
-                padding: 12px 8px;
-                font-size: 13px;
-            }
-            
-            .tab-content {
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 16px;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            
-            .section-title .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 12px;
-            }
-            
-            .product-img {
-                height: 100px;
-            }
-            
-            .table-container {
-                border-radius: 8px;
-                margin: 15px -10px;
-                width: calc(100% + 20px);
-            }
-            
-            .modal {
-                padding: 10px;
-            }
-            
-            .modal-content {
-                max-height: 90vh;
-            }
-            
-            .actions {
-                flex-direction: column;
-                gap: 4px;
-            }
-            
-            .actions .btn-sm {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .logo {
-                width: 70px;
-                height: 70px;
-                font-size: 24px;
-                margin: 0 auto;
-            }
-            
-            .business-info {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .business-info h1 {
-                font-size: 20px;
-            }
-            
-            .config-btn {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                background: rgba(255,255,255,0.25);
-            }
-            
-            .config-btn span {
-                display: none;
-            }
-            
-            .tabs {
-                flex-wrap: nowrap;
-                justify-content: flex-start;
-            }
-            
-            .tab {
-                flex: 0 0 auto;
-                padding: 12px 15px;
-            }
-            
-            .product-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .btn {
-                width: 100%;
-                margin-bottom: 8px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .logo {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .business-info h1 {
-                font-size: 18px;
-            }
-        }
-
-        /* ========== ESTILOS EXISTENTES MANTENIDOS ========== */
-        .status-process {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-
-        .status-completed {
-            background-color: #d4edda;
-            color: #155724;
-        }
-
-        .status-cancelled {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 16px;
-            transition: var(--transition);
-            background-color: var(--card-background);
-            color: var(--text-color);
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 255, 107, 53), 0.2);
-        }
-
-        .order-summary {
-            background-color: #f8f9fa;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-top: 30px;
-        }
-
-        .order-summary h3 {
-            margin-bottom: 15px;
-            color: var(--secondary);
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .summary-row.total {
-            font-weight: bold;
-            font-size: 18px;
-            color: var(--primary);
-            border-bottom: none;
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quantity-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        .quantity-btn:hover {
-            background-color: #f8f9fa;
-        }
-
-        .quantity-input {
-            width: 50px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            padding: 5px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #6c757d;
-        }
-
-        .empty-state i {
-            font-size: 50px;
-            margin-bottom: 20px;
-            color: #dee2e6;
-        }
-
-        .step-container {
-            display: flex;
-            margin-bottom: 30px;
-            overflow-x: auto;
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #e9ecef;
-            color: #6c757d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .step.active .step-number {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .step.completed .step-number {
-            background-color: var(--success);
-            color: white;
-        }
-
-        .step-text {
-            font-weight: 600;
-            color: #6c757d;
-        }
-
-        .step.active .step-text {
-            color: var(--primary);
-        }
-
-        .step.completed .step-text {
-            color: var(--success);
-        }
-
-        .step-line {
-            flex: 1;
-            height: 3px;
-            background-color: #e9ecef;
-            margin: 0 10px;
-        }
-
-        .step.completed .step-line {
-            background-color: var(--success);
-        }
-
-        .customer-selector {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .customer-card {
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            cursor: pointer;
-            transition: var(--transition);
-            background-color: var(--card-background);
-        }
-
-        .customer-card:hover {
-            border-color: var(--primary);
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.05);
-        }
-
-        .customer-card.selected {
-            border-color: var(--primary);
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.1);
-        }
-
-        .customer-name {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .customer-phone {
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .order-products {
-            margin-top: 20px;
-        }
-
-        .product-order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: var(--border-radius);
-            margin-bottom: 10px;
-            background-color: #f8f9fa;
-        }
-
-        .product-order-info {
-            flex: 1;
-        }
-
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: var(--border-radius);
-            background-color: var(--dark);
-            color: white;
-            box-shadow: var(--shadow);
-            z-index: 1001;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .notification.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .notification.success {
-            background-color: var(--success);
-        }
-
-        .notification.error {
-            background-color: var(--danger);
-        }
-
-        .logo-preview {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: #f8f9fa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: var(--primary);
-            margin: 0 auto 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 10px;
-        }
-
-        .welcome-screen {
-            text-align: center;
-            padding: 40px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .welcome-screen h1 {
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .welcome-screen p {
-            margin-bottom: 30px;
-            color: #6c757d;
-        }
-
-        .order-detail-card {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        /* Nuevos estilos para paleta de colores */
-        .color-palette {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .color-option {
-            border: 2px solid #ddd;
-            border-radius: var(--border-radius);
-            padding: 15px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .color-option:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .color-option.selected {
-            border-color: var(--primary);
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.05);
-        }
-
-        .color-preview {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            border: 2px solid #ddd;
-        }
-
-        /* Estilos para reportes */
-        .report-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .report-card {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .report-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        }
-
-        .report-card i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .report-card h3 {
-            color: var(--secondary);
-            margin-bottom: 10px;
-        }
-
-        .report-card p {
-            color: #6c757d;
-            margin-bottom: 20px;
-        }
-
-        .chart-container {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin-top: 20px;
-        }
-
-        .report-detail {
-            background-color: var(--card-background);
-            border-radius: var(--border-radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin-top: 20px;
-        }
-
-        .import-options {
-            background-color: #f8f9fa;
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid #ddd;
-        }
-
-        .import-option {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .color-input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .color-input {
-            width: 60px;
-            height: 40px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-        }
-
-        .theme-preset {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .theme-preset:hover {
-            border-color: var(--primary);
-            background-color: rgba(var(--primary-rgb, 255, 107, 53), 0.05);
-        }
-
-        @media (max-width: 768px) {
-            .step-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .step-line {
-                display: none;
-            }
-            
-            .report-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .data-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -1122,6 +38,12 @@
             </div>
             <div class="tab" data-tab="customers">
                 <i class="fas fa-users"></i> Clientes
+            </div>
+            <div class="tab" data-tab="suppliers">
+                <i class="fas fa-truck"></i> Proveedores
+            </div>
+            <div class="tab" data-tab="inventory">
+                <i class="fas fa-boxes"></i> Inventario
             </div>
             <div class="tab" data-tab="reports">
                 <i class="fas fa-chart-bar"></i> Reportes
@@ -1208,6 +130,262 @@
                     <i class="fas fa-users"></i>
                     <h3>No hay clientes registrados</h3>
                     <p>Agrega tu primer cliente haciendo clic en "Nuevo Cliente"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido de la pestaña Proveedores -->
+        <div class="tab-content" id="suppliers-content">
+            <div class="section-title">
+                <span>Gestión de Proveedores</span>
+                <div>
+                    <button class="btn btn-primary" id="newSupplierBtn" title="Agregar nuevo proveedor">
+                        <i class="fas fa-plus"></i> Nuevo Proveedor
+                    </button>
+                    <button class="btn btn-secondary" id="openPurchaseOrderModalBtn" title="Generar orden de compra">
+                        <i class="fas fa-file-invoice"></i> Orden de Compra
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchSuppliers" placeholder="Buscar proveedor...">
+                    </div>
+                </div>
+                <table id="suppliersTable">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Ingredientes</th>
+                            <th>Última Compra</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliersTableBody">
+                        <!-- Los proveedores se cargarán aquí dinámicamente -->
+                    </tbody>
+                </table>
+                <div class="empty-state" id="emptySuppliers">
+                    <i class="fas fa-truck"></i>
+                    <h3>No hay proveedores registrados</h3>
+                    <p>Agrega tu primer proveedor para comenzar a gestionar compras</p>
+                </div>
+            </div>
+            
+            <!-- Sección de órdenes de compra -->
+            <div class="pending-purchases" style="margin-top: 40px;">
+                <h3 style="margin-bottom: 20px;">
+                    <i class="fas fa-file-invoice"></i> Órdenes de Compra
+                </h3>
+                <div class="table-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchPurchaseOrders" placeholder="Buscar órdenes de compra...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table id="purchaseOrdersTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Proveedor</th>
+                                <th>Ingredientes</th>
+                                <th>Cantidad Total</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchaseOrdersTableBody">
+                            <!-- Órdenes de compra -->
+                        </tbody>
+                    </table>
+                    <div class="empty-state" id="emptyPurchaseOrders">
+                        <i class="fas fa-file-invoice"></i>
+                        <h3>No hay órdenes de compra</h3>
+                        <p>Genera tu primera orden de compra haciendo clic en "Orden de Compra"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido de la pestaña Inventario -->
+        <div class="tab-content" id="inventory-content">
+            <div class="section-title">
+                <span>Gestión de Inventario y Compras</span>
+                <div>
+                    <button class="btn btn-secondary" id="newPurchaseBtn" title="Registrar nueva compra">
+                        <i class="fas fa-shopping-cart"></i> Nueva Compra
+                    </button>
+                    <button class="btn btn-primary" id="newIngredientBtn" title="Agregar nuevo ingrediente">
+                        <i class="fas fa-plus"></i> Nuevo Ingrediente
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Filtros y resumen rápido -->
+            <div class="inventory-summary">
+                <div class="summary-card alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h3 id="lowStockCount">0</h3>
+                        <p>Productos con stock bajo</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-box"></i>
+                    <div>
+                        <h3 id="totalIngredients">0</h3>
+                        <p>Ingredientes en inventario</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div>
+                        <h3 id="inventoryValue">$0.00</h3>
+                        <p>Valor total inventario</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <i class="fas fa-history"></i>
+                    <div>
+                        <h3 id="pendingOrders">0</h3>
+                        <p>Órdenes pendientes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tabs internas para Inventario -->
+            <div class="inventory-tabs">
+                <button class="inv-tab active" data-inv-tab="ingredients">Ingredientes</button>
+                <button class="inv-tab" data-inv-tab="recipes">Recetas</button>
+                <button class="inv-tab" data-inv-tab="purchases">Historial de Compras</button>
+                <button class="inv-tab" data-inv-tab="alerts">Alertas</button>
+            </div>
+            
+            <!-- Contenido de Ingredientes -->
+            <div class="inv-tab-content active" id="ingredients-content">
+                <div class="table-container">
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchIngredients" placeholder="Buscar ingrediente...">
+                        </div>
+                        <button class="btn btn-sm btn-secondary" id="exportInventoryBtn">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                    <table id="ingredientsTable">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Categoría</th>
+                                <th>Stock Actual</th>
+                                <th>Unidad</th>
+                                <th>Stock Mínimo</th>
+                                <th>Proveedores</th>
+                                <th>Último Costo</th>
+                                <th>Valor en Inventario</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ingredientsTableBody">
+                            <!-- Los ingredientes se cargarán aquí -->
+                        </tbody>
+                    </table>
+                    <div class="empty-state" id="emptyIngredients">
+                        <i class="fas fa-box-open"></i>
+                        <h3>No hay ingredientes registrados</h3>
+                        <p>Agrega tu primer ingrediente haciendo clic en "Nuevo Ingrediente"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Recetas -->
+            <div class="inv-tab-content" id="recipes-content">
+                <div class="recipes-container">
+                    <div class="products-sidebar">
+                        <h3>Productos</h3>
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchProductsRecipe" placeholder="Buscar producto...">
+                        </div>
+                        <div class="product-list" id="recipeProductList">
+                            <!-- Lista de productos para asignar recetas -->
+                        </div>
+                    </div>
+                    <div class="recipe-detail">
+                        <div id="noRecipeSelected">
+                            <i class="fas fa-mortar-pestle"></i>
+                            <h3>Selecciona un producto</h3>
+                            <p>Selecciona un producto de la lista para ver o editar su receta</p>
+                        </div>
+                        <div id="recipeEditor" style="display: none;">
+                            <h3>Receta para: <span id="recipeProductName"></span></h3>
+                            <div class="recipe-ingredients" id="recipeIngredientsList">
+                                <!-- Ingredientes de la receta actual -->
+                            </div>
+                            <button class="btn btn-primary" id="addIngredientToRecipe">
+                                <i class="fas fa-plus"></i> Agregar Ingrediente
+                            </button>
+                            <div style="margin-top: 20px;">
+                                <button class="btn btn-success" id="saveRecipeBtn">
+                                    <i class="fas fa-save"></i> Guardar Receta
+                                </button>
+                                <button class="btn btn-secondary" id="calculateCostBtn">
+                                    <i class="fas fa-calculator"></i> Calcular Costo
+                                </button>
+                            </div>
+                            <div class="recipe-summary" id="recipeSummary" style="margin-top: 20px; display: none;">
+                                <h4>Resumen de Costos</h4>
+                                <p>Costo total de ingredientes: <strong id="recipeTotalCost">$0.00</strong></p>
+                                <p>Margen estimado: <strong id="recipeMargin">0%</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Compras -->
+            <div class="inv-tab-content" id="purchases-content">
+                <div class="table-container">
+                    <table id="purchasesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Proveedor</th>
+                                <th>Ingredientes</th>
+                                <th>Cantidad</th>
+                                <th>Costo Total</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="purchasesTableBody">
+                            <!-- Las compras se cargarán aquí -->
+                        </tbody>
+                    </table>
+                    <div class="empty-state" id="emptyPurchases">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>No hay compras registradas</h3>
+                        <p>Registra tu primera compra haciendo clic en "Nueva Compra"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido de Alertas -->
+            <div class="inv-tab-content" id="alerts-content">
+                <div class="alerts-container" id="alertsList">
+                    <!-- Las alertas se mostrarán aquí -->
+                </div>
+                <div class="empty-state" id="emptyAlerts">
+                    <i class="fas fa-bell-slash"></i>
+                    <h3>No hay alertas activas</h3>
+                    <p>¡Todo está bajo control!</p>
                 </div>
             </div>
         </div>
@@ -1319,6 +497,371 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" style="width: 100%;">
                                 <i class="fas fa-save"></i> Guardar Cliente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para crear/editar proveedor -->
+        <div class="modal" id="supplierModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="supplierModalTitle">Nuevo Proveedor</h2>
+                    <button class="btn btn-secondary btn-sm" id="closeSupplierModal" title="Cerrar">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="supplierForm">
+                        <input type="hidden" id="supplierId">
+                        <div class="form-group">
+                            <label for="supplierName">Nombre del proveedor *</label>
+                            <input type="text" id="supplierName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplierPhone">Teléfono (WhatsApp) *</label>
+                            <input type="tel" id="supplierPhone" class="form-control" required placeholder="+52 123 456 7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="supplierEmail">Correo electrónico (opcional)</label>
+                            <input type="email" id="supplierEmail" class="form-control" placeholder="proveedor@ejemplo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="supplierAddress">Dirección (opcional)</label>
+                            <textarea id="supplierAddress" class="form-control" rows="2" placeholder="Calle y número, Ciudad, Estado"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="supplierNotes">Notas adicionales (opcional)</label>
+                            <textarea id="supplierNotes" class="form-control" rows="3" placeholder="Horarios de entrega, condiciones de pago, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-save"></i> Guardar Proveedor
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para crear/editar ingrediente (MEJORADO CON PROVEEDORES) -->
+        <div class="modal" id="ingredientModal">
+            <div class="modal-content" style="max-width: 700px;">
+                <div class="modal-header">
+                    <h2 id="ingredientModalTitle">Nuevo Ingrediente</h2>
+                    <button class="btn btn-secondary btn-sm" id="closeIngredientModal" title="Cerrar">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="ingredientForm">
+                        <input type="hidden" id="ingredientId">
+                        <div class="form-group">
+                            <label for="ingredientName">Nombre del ingrediente *</label>
+                            <input type="text" id="ingredientName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientCategory">Categoría *</label>
+                            <select id="ingredientCategory" class="form-control" required>
+                                <option value="">Selecciona una categoría</option>
+                                <option value="proteina">Proteína (carnes)</option>
+                                <option value="lacteo">Lácteo</option>
+                                <option value="vegetal">Vegetal</option>
+                                <option value="granos">Granos y cereales</option>
+                                <option value="condimentos">Condimentos y especias</option>
+                                <option value="aceites">Aceites y grasas</option>
+                                <option value="bebidas">Bebidas</option>
+                                <option value="empaques">Empaques</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientUnit">Unidad de medida *</label>
+                            <select id="ingredientUnit" class="form-control" required>
+                                <option value="">Selecciona una unidad</option>
+                                <option value="kg">Kilogramos (kg)</option>
+                                <option value="g">Gramos (g)</option>
+                                <option value="l">Litros (l)</option>
+                                <option value="ml">Mililitros (ml)</option>
+                                <option value="pz">Piezas (pz)</option>
+                                <option value="paq">Paquetes (paq)</option>
+                                <option value="caja">Cajas</option>
+                                <option value="botella">Botellas</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Proveedores disponibles</label>
+                            <div class="suppliers-selector" id="suppliersSelector">
+                                <!-- Los proveedores se cargarán aquí dinámicamente -->
+                            </div>
+                            <small>Selecciona uno o más proveedores para este ingrediente</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ingredientPreferredSupplier">Proveedor preferido</label>
+                            <select id="ingredientPreferredSupplier" class="form-control">
+                                <option value="">Selecciona un proveedor preferido</option>
+                                <!-- Se llenará dinámicamente -->
+                            </select>
+                            <small>Selecciona automáticamente al generar órdenes de compra</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="ingredientStock">Stock actual *</label>
+                            <input type="number" id="ingredientStock" class="form-control" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientMinStock">Stock mínimo (alerta) *</label>
+                            <input type="number" id="ingredientMinStock" class="form-control" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientCost">Costo unitario (último precio) *</label>
+                            <input type="number" id="ingredientCost" class="form-control" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ingredientLocation">Ubicación en almacén (opcional)</label>
+                            <input type="text" id="ingredientLocation" class="form-control" placeholder="Ej: Estante A, Nivel 3">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-save"></i> Guardar Ingrediente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para generar orden de compra (MODIFICADO PARA USAR PRODUCTOS Y PROVEEDORES) -->
+        <!-- Modal para generar orden de compra (CON SCROLLBARS) -->
+<div class="modal" id="purchaseOrderModal">
+    <div class="modal-content" style="max-width: 1400px; width: 95vw; height: 90vh;">
+        <div class="modal-header">
+            <h2 id="purchaseOrderModalTitle">Generar Orden de Compra</h2>
+            <button class="btn btn-secondary btn-sm" id="closePurchaseOrderModal" title="Cerrar">X</button>
+        </div>
+        <div class="modal-body" style="flex: 1; min-height: 0; overflow: hidden;">
+            <div class="purchase-order-container">
+                <!-- Panel izquierdo: Ingredientes disponibles -->
+                <div class="purchase-ingredients-panel">
+                    <h3><i class="fas fa-boxes"></i> Ingredientes Disponibles</h3>
+                    <div class="search-box" style="margin-bottom: 15px;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchPurchaseIngredients" placeholder="Buscar ingrediente..." onkeyup="filterPurchaseIngredients()">
+                    </div>
+                    <div class="ingredients-grid-container">
+                        <div class="ingredients-grid" id="purchaseIngredientsGrid">
+                            <!-- Los ingredientes se cargarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Panel derecho: Ingredientes seleccionados y vista previa -->
+                <div class="purchase-order-preview">
+                    <div class="purchase-order-summary">
+                        <h3><i class="fas fa-shopping-cart"></i> Orden de Compra</h3>
+                        
+                        <div class="order-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-box"></i>
+                                <span id="selectedCount">0</span>
+                                <small>Ingredientes</small>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-list-ol"></i>
+                                <span id="totalQuantity">0</span>
+                                <small>Unidades</small>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-truck"></i>
+                                <span id="supplierCount">0</span>
+                                <small>Proveedores</small>
+                            </div>
+                        </div>
+                        
+                        <div class="selected-ingredients-container">
+                            <div class="selected-ingredients" id="purchaseSelectedIngredients">
+                                <p class="empty-message">No hay ingredientes seleccionados. Agrega ingredientes a la orden.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="purchase-order-details">
+                            <div class="form-group">
+                                <label for="purchaseOrderNotes">Notas para el proveedor (opcional):</label>
+                                <textarea id="purchaseOrderNotes" class="form-control" rows="3" placeholder="Instrucciones especiales, horarios de entrega, etc."></textarea>
+                            </div>
+                            
+                            <div class="preview-controls">
+                                <button type="button" class="btn btn-sm btn-secondary" onclick="autoAssignSuppliers()">
+                                    <i class="fas fa-robot"></i> Asignar Automáticamente
+                                </button>
+                                <button type="button" class="btn btn-sm btn-secondary" onclick="clearSupplierAssignments()">
+                                    <i class="fas fa-eraser"></i> Limpiar Asignaciones
+                                </button>
+                            </div>
+                            
+                            <div class="supplier-orders-preview-container">
+                                <div class="supplier-orders-preview" id="supplierOrdersPreview">
+                                    <!-- Se generará dinámicamente la agrupación por proveedor -->
+                                    <div class="empty-message">
+                                        <i class="fas fa-info-circle"></i>
+                                        <p>Agrega ingredientes y asigna proveedores para ver la vista previa.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="purchase-order-actions">
+                            <button type="button" class="btn btn-secondary" onclick="clearPurchaseOrder()">
+                                <i class="fas fa-trash"></i> Limpiar Todo
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="generatePurchaseOrders(event)">
+                                <i class="fas fa-file-pdf"></i> Generar Órdenes de Compra
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Modal para confirmar recepción de compra -->
+        <div class="modal" id="confirmPurchaseModal">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h2>Confirmar Recepción de Compra</h2>
+                    <button class="btn btn-secondary btn-sm" onclick="closeModal(this.closest('.modal'))" title="Cerrar">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="confirmPurchaseForm" onsubmit="confirmPurchase(event)">
+                        <input type="hidden" id="confirmPurchaseOrderId">
+                        
+                        <div id="confirmPurchaseOrderInfo">
+                            <!-- Información de la orden -->
+                        </div>
+                        
+                        <div class="form-group">
+                            <h4>Ingredientes recibidos:</h4>
+                            <div id="confirmPurchaseItems">
+                                <!-- Items de la orden con controles para ajustar cantidades -->
+                            </div>
+                            <small>Ajusta las cantidades según lo recibido. Los cambios se reflejarán en el inventario.</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPurchaseNotes">Notas de recepción (opcional):</label>
+                            <textarea id="confirmPurchaseNotes" class="form-control" rows="3" placeholder="Observaciones sobre la entrega..."></textarea>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 30px;">
+                            <button type="submit" class="btn btn-success" style="width: 100%;">
+                                <i class="fas fa-check"></i> Confirmar Recepción y Actualizar Inventario
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para registrar compra directa -->
+        <div class="modal" id="purchaseModal">
+            <div class="modal-content" style="max-width: 800px;">
+                <div class="modal-header">
+                    <h2 id="purchaseModalTitle">Registrar Nueva Compra</h2>
+                    <button class="btn btn-secondary btn-sm" id="closePurchaseModal" title="Cerrar">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="purchaseForm">
+                        <div class="form-group">
+                            <label for="purchaseSupplier">Proveedor *</label>
+                            <select id="purchaseSupplier" class="form-control" required>
+                                <option value="">Selecciona un proveedor</option>
+                                <!-- Se llenará con proveedores disponibles -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchaseDate">Fecha de compra *</label>
+                            <input type="datetime-local" id="purchaseDate" class="form-control" required>
+                        </div>
+                        
+                        <h3>Ingredientes comprados</h3>
+                        <div id="purchaseItemsContainer">
+                            <div class="purchase-item">
+                                <div class="purchase-item-row">
+                                    <select class="purchase-ingredient-select form-control" required>
+                                        <option value="">Selecciona ingrediente</option>
+                                        <!-- Se llenará con ingredientes disponibles -->
+                                    </select>
+                                    <input type="number" class="purchase-quantity form-control" min="0.01" step="0.01" placeholder="Cantidad" required>
+                                    <input type="number" class="purchase-unit-cost form-control" min="0" step="0.01" placeholder="Costo unitario" required>
+                                    <button type="button" class="btn btn-sm btn-danger remove-purchase-item" onclick="removePurchaseItem(this)">X</button>
+                                </div>
+                                <div class="purchase-item-info">
+                                    <span class="item-name"></span>
+                                    <span class="item-total">Total: $0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" id="addPurchaseItemBtn">
+                            <i class="fas fa-plus"></i> Agregar otro ingrediente
+                        </button>
+                        
+                        <div class="purchase-summary" style="margin-top: 20px;">
+                            <h4>Resumen de compra</h4>
+                            <div class="summary-row">
+                                <span>Subtotal:</span>
+                                <span id="purchaseSubtotal">$0.00</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>IVA (16%):</span>
+                                <span id="purchaseIva">$0.00</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total de compra:</span>
+                                <span id="purchaseTotal">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 30px;">
+                            <button type="submit" class="btn btn-success" style="width: 100%;">
+                                <i class="fas fa-check"></i> Registrar Compra
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar ingrediente a receta -->
+        <div class="modal" id="recipeIngredientModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Agregar Ingrediente a Receta</h2>
+                    <button class="btn btn-secondary btn-sm" id="closeRecipeIngredientModal" title="Cerrar">X</button>
+                </div>
+                <div class="modal-body">
+                    <form id="recipeIngredientForm">
+                        <div class="form-group">
+                            <label for="selectRecipeIngredient">Ingrediente *</label>
+                            <select id="selectRecipeIngredient" class="form-control" required>
+                                <option value="">Selecciona un ingrediente</option>
+                                <!-- Se llenará con ingredientes disponibles -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipeIngredientQuantity">Cantidad necesaria *</label>
+                            <input type="number" id="recipeIngredientQuantity" class="form-control" min="0.001" step="0.001" required>
+                            <small id="recipeIngredientUnit"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipeIngredientWaste">Porcentaje de merma/desperdicio (%)</label>
+                            <input type="number" id="recipeIngredientWaste" class="form-control" min="0" max="100" step="0.1" value="5">
+                            <small>Considera el porcentaje que se pierde en preparación</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                                <i class="fas fa-plus"></i> Agregar a Receta
                             </button>
                         </div>
                     </form>
@@ -1578,16 +1121,21 @@
                                 <label for="importCustomers">Clientes</label>
                             </div>
                             <div class="import-option">
+                                <input type="checkbox" id="importSuppliers" checked>
+                                <label for="importSuppliers">Proveedores</label>
+                            </div>
+                            <div class="import-option">
                                 <input type="checkbox" id="importOrders" checked>
                                 <label for="importOrders">Órdenes</label>
+                            </div>
+                            <div class="import-option">
+                                <input type="checkbox" id="importInventory" checked>
+                                <label for="importInventory">Inventario</label>
                             </div>
                             <div class="import-option">
                                 <input type="checkbox" id="importBusiness" checked>
                                 <label for="importBusiness">Configuración del negocio</label>
                             </div>
-                            <button type="button" class="btn btn-sm btn-primary" id="confirmImportBtn" style="margin-top: 10px;">
-                                <i class="fas fa-check"></i> Confirmar Importación
-                            </button>
                         </div>
                         
                         <input type="file" id="importFileInput" style="display: none;" accept=".json">
@@ -1597,6 +1145,68 @@
                                 <i class="fas fa-save"></i> Guardar Configuración
                             </button>
                         </div>
+                        <hr style="margin: 30px 0;">
+
+<!-- Agrega esta sección justo después del <hr> -->
+<h3>Uso de Almacenamiento</h3>
+<div class="storage-meter-container">
+    <div class="storage-info">
+        <div class="storage-progress">
+            <div class="progress-bar" id="storageProgressBar"></div>
+        </div>
+        <div class="storage-details">
+            <div class="storage-usage">
+                <i class="fas fa-database"></i>
+                <span id="storageUsed">0 KB</span> / 5 MB
+            </div>
+            <div class="storage-percentage" id="storagePercentage">0%</div>
+        </div>
+    </div>
+    <div class="storage-breakdown" id="storageBreakdown">
+        <!-- El desglose por tipo de datos se cargará aquí -->
+    </div>
+    <div class="storage-actions">
+        <!-- <button type="button" class="btn btn-sm btn-secondary" id="optimizeStorageBtn" title="Optimizar espacio de almacenamiento">
+            <i class="fas fa-magic"></i> Optimizar
+        </button> -->
+        <button type="button" class="btn btn-sm btn-secondary" id="calculateStorageBtn" title="Recalcular uso de almacenamiento">
+            <i class="fas fa-sync-alt"></i> Recalcular
+        </button>
+    </div>
+</div>
+
+<hr style="margin: 30px 0;">
+<!-- Después de la sección "Uso de Almacenamiento", agrega esto: -->
+<h3 style="margin-top: 30px;">Gestor de Limpieza de Almacenamiento</h3>
+<div class="storage-cleaner">
+    <div class="cleaner-header">
+        <h4>Análisis de datos almacenados</h4>
+        <button class="btn btn-sm btn-secondary" id="refreshStorageAnalysisBtn">
+            <i class="fas fa-sync-alt"></i> Reanalizar
+        </button>
+    </div>
+    
+    <div class="storage-analysis" id="storageAnalysis">
+        <div class="analysis-loading">
+            <i class="fas fa-spinner fa-spin"></i> Analizando datos...
+        </div>
+    </div>
+    
+    <div class="cleaner-actions" id="cleanerActions" style="display: none;">
+        <h4>Acciones de limpieza:</h4>
+        <div class="action-buttons">
+            <button class="btn btn-sm btn-warning" id="cleanDuplicatesBtn">
+                <i class="fas fa-copy"></i> Eliminar duplicados
+            </button>
+            <button class="btn btn-sm btn-warning" id="cleanOldOrdersBtn">
+                <i class="fas fa-calendar-times"></i> Limpiar órdenes antiguas
+            </button>
+            <button class="btn btn-sm btn-danger" id="cleanAllBtn">
+                <i class="fas fa-trash"></i> Limpieza profunda
+            </button>
+        </div>
+    </div>
+</div>
                     </form>
                 </div>
             </div>
@@ -1655,1492 +1265,18 @@
             <span id="notificationText">Operación realizada con éxito</span>
         </div>
     </div>
-
-    <script>
-        // Variables globales
-        let currentStep = 1;
-        let selectedCustomer = null;
-        let selectedProducts = {};
-        let editingProductId = null;
-        let editingCustomerId = null;
-        let editingOrderId = null;
-        let currentReport = null;
-        let importDataBuffer = null;
-
-        // Elementos del DOM
-        const elements = {
-            tabs: document.querySelectorAll('.tab'),
-            tabContents: document.querySelectorAll('.tab-content'),
-            newOrderBtn: document.getElementById('newOrderBtn'),
-            newProductBtn: document.getElementById('newProductBtn'),
-            newCustomerBtn: document.getElementById('newCustomerBtn'),
-            configBtn: document.getElementById('configBtn'),
-            refreshReportsBtn: document.getElementById('refreshReportsBtn'),
-            productModal: document.getElementById('productModal'),
-            customerModal: document.getElementById('customerModal'),
-            orderModal: document.getElementById('orderModal'),
-            configModal: document.getElementById('configModal'),
-            orderDetailModal: document.getElementById('orderDetailModal'),
-            welcomeModal: document.getElementById('welcomeModal'),
-            productForm: document.getElementById('productForm'),
-            customerForm: document.getElementById('customerForm'),
-            configForm: document.getElementById('configForm'),
-            welcomeForm: document.getElementById('welcomeForm'),
-            ordersTableBody: document.getElementById('ordersTableBody'),
-            productsGrid: document.getElementById('productsGrid'),
-            customersTableBody: document.getElementById('customersTableBody'),
-            customerSelector: document.getElementById('customerSelector'),
-            orderProductsGrid: document.getElementById('orderProductsGrid'),
-            orderSelectedProducts: document.getElementById('orderSelectedProducts'),
-            orderSummary: document.getElementById('orderSummary'),
-            notification: document.getElementById('notification'),
-            notificationText: document.getElementById('notificationText')
-        };
-
-        // Datos iniciales
-        let appData = {
-            business: {
-                name: "Snack Orders",
-                logo: "",
-                whatsapp: "+52 123 456 7890",
-                address: "",
-                rfc: ""
-            },
-            products: [],
-            customers: [],
-            orders: [],
-            settings: {
-                ivaRate: 0.16,
-                currency: "MXN",
-                colorTheme: "default",
-                colors: {
-                    primary: "#FF6B35",
-                    secondary: "#004E89",
-                    background: "#f5f7fa",
-                    text: "#212529",
-                    cardBackground: "white",
-                    buttonText: "white"
-                }
-            }
-        };
-
-        // Inicialización
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAppData();
-            setupEventListeners();
-            renderAllData();
-            checkFirstUse();
-            applyColorTheme();
-        });
-
-        // Cargar datos desde localStorage
-        function loadAppData() {
-            const savedData = localStorage.getItem('snackOrdersData');
-            if (savedData) {
-                appData = JSON.parse(savedData);
-                updateBusinessInfo();
-            }
-        }
-
-        // Guardar datos
-        function saveAppData() {
-            localStorage.setItem('snackOrdersData', JSON.stringify(appData));
-        }
-
-        // Aplicar tema de colores
-        function applyColorTheme() {
-            const colors = appData.settings.colors;
-            document.documentElement.style.setProperty('--primary', colors.primary);
-            document.documentElement.style.setProperty('--secondary', colors.secondary);
-            document.documentElement.style.setProperty('--background-color', colors.background);
-            document.documentElement.style.setProperty('--text-color', colors.text);
-            document.documentElement.style.setProperty('--card-background', colors.cardBackground);
-            document.documentElement.style.setProperty('--button-text', colors.buttonText);
-            const primaryDark = adjustColor(colors.primary, -20);
-            document.documentElement.style.setProperty('--primary-dark', primaryDark);
-            const primaryRGB = hexToRgb(colors.primary);
-            document.documentElement.style.setProperty('--primary-rgb', `${primaryRGB.r}, ${primaryRGB.g}, ${primaryRGB.b}`);
-        }
-
-        // Verificar primer uso
-        function checkFirstUse() {
-            if (!localStorage.getItem('snackOrdersData')) {
-                elements.welcomeModal.classList.add('active');
-            } else {
-                elements.welcomeModal.classList.remove('active');
-            }
-        }
-
-        // Actualizar información del negocio
-        function updateBusinessInfo() {
-            document.getElementById('business-name').textContent = appData.business.name;
-            document.getElementById('business-contact').textContent = `WhatsApp: ${appData.business.whatsapp}`;
-            const logoElement = document.getElementById('logo');
-            if (appData.business.logo) {
-                logoElement.innerHTML = `<img src="${appData.business.logo}" alt="Logo" style="width:100%;height:100%;object-fit:contain;padding:5px;">`;
-            } else {
-                logoElement.textContent = appData.business.name.charAt(0);
-            }
-            const logoPreview = document.getElementById('logoPreview');
-            if (appData.business.logo) {
-                logoPreview.innerHTML = `<img src="${appData.business.logo}" alt="Logo">`;
-            } else {
-                logoPreview.innerHTML = `<span>${appData.business.name.charAt(0)}</span>`;
-            }
-        }
-
-        // Configurar event listeners
-        function setupEventListeners() {
-            // Tabs
-            elements.tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    switchTab(tabId);
-                });
-            });
-
-            // Botones principales
-            elements.newProductBtn.addEventListener('click', () => openProductModal());
-            elements.newCustomerBtn.addEventListener('click', () => openCustomerModal());
-            elements.newOrderBtn.addEventListener('click', () => openOrderModal());
-            elements.configBtn.addEventListener('click', () => openConfigModal());
-            elements.refreshReportsBtn.addEventListener('click', () => refreshReports());
-
-            // Cerrar modales
-            document.getElementById('closeProductModal').addEventListener('click', () => closeModal(elements.productModal));
-            document.getElementById('closeCustomerModal').addEventListener('click', () => closeModal(elements.customerModal));
-            document.getElementById('closeOrderModal').addEventListener('click', () => closeModal(elements.orderModal));
-            document.getElementById('closeConfigModal').addEventListener('click', () => closeModal(elements.configModal));
-            document.getElementById('closeOrderDetailModal').addEventListener('click', () => closeModal(elements.orderDetailModal));
-
-            // Formularios
-            elements.productForm.addEventListener('submit', saveProduct);
-            elements.customerForm.addEventListener('submit', saveCustomer);
-            elements.configForm.addEventListener('submit', saveConfig);
-            elements.welcomeForm.addEventListener('submit', saveWelcomeConfig);
-
-            // Gestión de datos
-            document.getElementById('exportDataBtn').addEventListener('click', exportData);
-            document.getElementById('importDataBtn').addEventListener('click', () => {
-                document.getElementById('importFileInput').click();
-                document.getElementById('importOptions').style.display = 'block';
-            });
-            document.getElementById('clearDataBtn').addEventListener('click', clearData);
-            document.getElementById('importFileInput').addEventListener('change', importData);
-            document.getElementById('confirmImportBtn').addEventListener('click', confirmImport);
-
-            // Orden - Paso 1: Cliente
-            document.getElementById('selectCustomerBtn').addEventListener('click', goToStep2);
-            document.getElementById('newCustomerInOrderBtn').addEventListener('click', () => {
-                closeModal(elements.orderModal);
-                openCustomerModal();
-            });
-
-            // Orden - Paso 2: Productos
-            document.getElementById('backToStep1Btn').addEventListener('click', goToStep1);
-            document.getElementById('goToStep3Btn').addEventListener('click', goToStep3);
-
-            // Orden - Paso 3: Confirmación
-            document.getElementById('backToStep2Btn').addEventListener('click', goToStep2FromStep3);
-            document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
-
-            // Controladores de color
-            document.querySelectorAll('input[type="color"]').forEach(input => {
-                input.addEventListener('input', function() {
-                    const textId = this.id + 'Text';
-                    document.getElementById(textId).value = this.value;
-                });
-            });
-
-            document.querySelectorAll('input[type="text"][id$="Text"]').forEach(input => {
-                input.addEventListener('input', function() {
-                    const colorId = this.id.replace('Text', '');
-                    document.getElementById(colorId).value = this.value;
-                });
-            });
-
-            // Cerrar modales al hacer clic fuera
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal(modal);
-                    }
-                });
-            });
-        }
-
-        // Cambiar pestaña
-        function switchTab(tabId) {
-            elements.tabs.forEach(tab => {
-                if (tab.getAttribute('data-tab') === tabId) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-
-            elements.tabContents.forEach(content => {
-                if (content.id === `${tabId}-content`) {
-                    content.classList.add('active');
-                } else {
-                    content.classList.remove('active');
-                }
-            });
-
-            if (tabId === 'orders') {
-                renderOrders();
-            } else if (tabId === 'products') {
-                renderProducts();
-            } else if (tabId === 'customers') {
-                renderCustomers();
-            } else if (tabId === 'reports') {
-                document.getElementById('reportDetailContainer').style.display = 'none';
-            }
-        }
-
-        // Renderizar todos los datos
-        function renderAllData() {
-            renderOrders();
-            renderProducts();
-            renderCustomers();
-        }
-
-        // ========== FUNCIONES DE PRODUCTOS ==========
-        function generateId() {
-            const now = new Date();
-            const year = now.getFullYear().toString().slice(-2);
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const hour = now.getHours().toString().padStart(2, '0');
-            const minute = now.getMinutes().toString().padStart(2, '0');
-            const second = now.getSeconds().toString().padStart(2, '0');
-            return `${year}${month}${day}${hour}${minute}${second}`;
-        }
-
-        // ========== FUNCIONES DE COLORES ==========
-        function selectColorTheme(theme) {
-            appData.settings.colorTheme = theme;
-            document.querySelectorAll('.color-option').forEach(opt => {
-                opt.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            const customControls = document.getElementById('customColorControls');
-            if (theme === 'custom') {
-                customControls.style.display = 'block';
-                return;
-            } else {
-                customControls.style.display = 'none';
-            }
-            
-            let colors;
-            switch(theme) {
-                case 'professional':
-                    colors = {primary: "#2C3E50", secondary: "#34495E", background: "#ECF0F1", text: "#2C3E50", cardBackground: "white", buttonText: "white"};
-                    break;
-                case 'modern':
-                    colors = {primary: "#3498DB", secondary: "#2980B9", background: "#F7F9FA", text: "#2C3E50", cardBackground: "white", buttonText: "white"};
-                    break;
-                case 'vibrant':
-                    colors = {primary: "#9B59B6", secondary: "#8E44AD", background: "#F4ECF7", text: "#2C3E50", cardBackground: "white", buttonText: "white"};
-                    break;
-                case 'dark':
-                    colors = {primary: "#34495E", secondary: "#2C3E50", background: "#1C2833", text: "#ECF0F1", cardBackground: "#2C3E50", buttonText: "white"};
-                    break;
-                default:
-                    colors = {primary: "#FF6B35", secondary: "#004E89", background: "#f5f7fa", text: "#212529", cardBackground: "white", buttonText: "white"};
-            }
-            
-            appData.settings.colors = colors;
-            applyColorTheme();
-            showNotification('Tema de colores aplicado correctamente');
-        }
-
-        function applyCustomColors() {
-            const colors = {
-                primary: document.getElementById('colorPrimary').value,
-                secondary: document.getElementById('colorSecondary').value,
-                background: document.getElementById('colorBackground').value,
-                text: document.getElementById('colorText').value,
-                cardBackground: "white",
-                buttonText: "white"
-            };
-            appData.settings.colors = colors;
-            appData.settings.colorTheme = 'custom';
-            applyColorTheme();
-            showNotification('Colores personalizados aplicados');
-        }
-
-        // ========== FUNCIONES DE IMPORTACIÓN MEJORADA ==========
-        function importData(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    importDataBuffer = JSON.parse(e.target.result);
-                    if (importDataBuffer.business || importDataBuffer.products || importDataBuffer.customers || importDataBuffer.orders) {
-                        showNotification('Archivo cargado. Selecciona qué datos importar.', 'success');
-                    } else {
-                        showNotification('El archivo no tiene un formato válido', 'error');
-                        importDataBuffer = null;
-                    }
-                } catch (error) {
-                    showNotification('Error al importar datos: ' + error.message, 'error');
-                    importDataBuffer = null;
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        function confirmImport() {
-            if (!importDataBuffer) {
-                showNotification('No hay datos para importar', 'error');
-                return;
-            }
-            
-            let importCount = 0;
-            const messages = [];
-            
-            // Importar productos
-            if (document.getElementById('importProducts').checked && importDataBuffer.products) {
-                importDataBuffer.products.forEach(newProduct => {
-                    const exists = appData.products.some(p => p.id === newProduct.id || p.name === newProduct.name);
-                    if (!exists) {
-                        appData.products.push(newProduct);
-                        importCount++;
-                    }
-                });
-                messages.push(`${importDataBuffer.products.length} productos procesados`);
-            }
-            
-            // Importar clientes
-            if (document.getElementById('importCustomers').checked && importDataBuffer.customers) {
-                importDataBuffer.customers.forEach(newCustomer => {
-                    const exists = appData.customers.some(c => c.id === newCustomer.id || 
-                        (c.phone && newCustomer.phone && c.phone === newCustomer.phone));
-                    if (!exists) {
-                        appData.customers.push(newCustomer);
-                        importCount++;
-                    }
-                });
-                messages.push(`${importDataBuffer.customers.length} clientes procesados`);
-            }
-            
-            // Importar órdenes
-            if (document.getElementById('importOrders').checked && importDataBuffer.orders) {
-                importDataBuffer.orders.forEach(newOrder => {
-                    const exists = appData.orders.some(o => o.id === newOrder.id);
-                    if (!exists) {
-                        appData.orders.push(newOrder);
-                        importCount++;
-                    }
-                });
-                messages.push(`${importDataBuffer.orders.length} órdenes procesadas`);
-            }
-            
-            // Importar configuración
-            if (document.getElementById('importBusiness').checked && importDataBuffer.business) {
-                appData.business = {...appData.business, ...importDataBuffer.business};
-                messages.push('Configuración del negocio actualizada');
-            }
-            
-            saveAppData();
-            renderAllData();
-            updateBusinessInfo();
-            
-            if (importCount > 0) {
-                showNotification(`${importCount} nuevos elementos importados. ${messages.join(', ')}`);
-            } else {
-                showNotification('No se importaron elementos nuevos (posibles duplicados)', 'info');
-            }
-            
-            importDataBuffer = null;
-            document.getElementById('importOptions').style.display = 'none';
-            document.getElementById('importFileInput').value = '';
-        }
-
-        // ========== FUNCIONES DE REPORTES ==========
-        function refreshReports() {
-            if (currentReport) {
-                generateReport(currentReport);
-            }
-            showNotification('Reportes actualizados');
-        }
-
-        function generateReport(type) {
-            currentReport = type;
-            const container = document.getElementById('reportDetailContainer');
-            const detail = document.getElementById('reportDetail');
-            
-            let reportHTML = '';
-            let reportTitle = '';
-            
-            switch(type) {
-                case 'sales':
-                    reportTitle = 'Reporte de Ventas por Período';
-                    reportHTML = generateSalesReport();
-                    break;
-                case 'products':
-                    reportTitle = 'Productos Más Vendidos';
-                    reportHTML = generateProductsReport();
-                    break;
-                case 'customers':
-                    reportTitle = 'Clientes Más Frecuentes';
-                    reportHTML = generateCustomersReport();
-                    break;
-                case 'financial':
-                    reportTitle = 'Estado Financiero';
-                    reportHTML = generateFinancialReport();
-                    break;
-                case 'trends':
-                    reportTitle = 'Tendencias de Ventas';
-                    reportHTML = generateTrendsReport();
-                    break;
-            }
-            
-            detail.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3>${reportTitle}</h3>
-                    <div>
-                        <button class="btn btn-sm btn-primary" onclick="exportReport('${type}')" title="Exportar a PDF">
-                            <i class="fas fa-file-pdf"></i> Exportar PDF
-                        </button>
-                        <button class="btn btn-sm btn-secondary" onclick="printReport()" title="Imprimir reporte">
-                            <i class="fas fa-print"></i> Imprimir
-                        </button>
-                    </div>
-                </div>
-                ${reportHTML}
-            `;
-            
-            container.style.display = 'block';
-            container.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function generateSalesReport() {
-            const now = new Date();
-            const last30Days = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-            const recentOrders = appData.orders.filter(order => 
-                new Date(order.date) >= last30Days && order.status !== 'cancelled'
-            );
-            
-            let totalRevenue = 0;
-            let orderCount = 0;
-            recentOrders.forEach(order => {
-                totalRevenue += calculateOrderTotal(order);
-                orderCount++;
-            });
-            
-            return `
-                <div class="chart-container">
-                    <h4>Resumen de Ventas (Últimos 30 días)</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">${orderCount}</div>
-                            <div>Órdenes Totales</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--success), #218838); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">$${totalRevenue.toFixed(2)}</div>
-                            <div>Ingresos Totales</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--secondary), #003366); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">$${(totalRevenue / orderCount || 0).toFixed(2)}</div>
-                            <div>Ticket Promedio</div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin-top: 30px;">Ventas por Día</h4>
-                    <div style="overflow-x: auto; margin-top: 20px;">
-                        <table style="width: 100%;">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Órdenes</th>
-                                    <th>Ingresos</th>
-                                    <th>Ticket Promedio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${generateDailySalesHTML(recentOrders)}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-        }
-
-        function generateDailySalesHTML(orders) {
-            const dailySales = {};
-            orders.forEach(order => {
-                const date = new Date(order.date).toISOString().split('T')[0];
-                const total = calculateOrderTotal(order);
-                if (!dailySales[date]) dailySales[date] = { orders: 0, revenue: 0 };
-                dailySales[date].orders++;
-                dailySales[date].revenue += total;
-            });
-            
-            let html = '';
-            Object.keys(dailySales).sort().reverse().forEach(date => {
-                const sales = dailySales[date];
-                const avgTicket = sales.revenue / sales.orders;
-                html += `<tr><td>${formatDate(date + 'T00:00:00')}</td><td>${sales.orders}</td><td>$${sales.revenue.toFixed(2)}</td><td>$${avgTicket.toFixed(2)}</td></tr>`;
-            });
-            return html;
-        }
-
-        function generateProductsReport() {
-            const productSales = {};
-            appData.orders.forEach(order => {
-                if (order.status !== 'cancelled') {
-                    order.items.forEach(item => {
-                        const product = appData.products.find(p => p.id === item.productId);
-                        if (product) {
-                            if (!productSales[product.id]) {
-                                productSales[product.id] = { name: product.name, quantity: 0, revenue: 0 };
-                            }
-                            productSales[product.id].quantity += item.quantity;
-                            productSales[product.id].revenue += item.quantity * item.price;
-                        }
-                    });
-                }
-            });
-            
-            const topProducts = Object.values(productSales).sort((a, b) => b.revenue - a.revenue).slice(0, 10);
-            const totalRevenue = topProducts.reduce((sum, product) => sum + product.revenue, 0);
-            
-            let html = `
-                <div class="chart-container">
-                    <h4>Top 10 Productos por Ventas</h4>
-                    <div style="overflow-x: auto; margin-top: 20px;">
-                        <table style="width: 100%;">
-                            <thead><tr><th>Producto</th><th>Cantidad Vendida</th><th>Ingresos Generados</th><th>Porcentaje</th></tr></thead>
-                            <tbody>`;
-            
-            topProducts.forEach((product, index) => {
-                const percentage = totalRevenue > 0 ? (product.revenue / totalRevenue * 100).toFixed(1) : 0;
-                html += `
-                    <tr>
-                        <td>${index + 1}. ${product.name}</td>
-                        <td>${product.quantity}</td>
-                        <td>$${product.revenue.toFixed(2)}</td>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div style="flex: 1; height: 20px; background-color: #e9ecef; border-radius: 10px; overflow: hidden;">
-                                    <div style="width: ${percentage}%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark));"></div>
-                                </div>
-                                <div>${percentage}%</div>
-                            </div>
-                        </td>
-                    </tr>`;
-            });
-            
-            html += `</tbody></table></div>
-                    <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                        <strong>Total de ingresos por productos:</strong> $${totalRevenue.toFixed(2)}
-                    </div>
-                </div>`;
-            return html;
-        }
-
-        function generateCustomersReport() {
-            const customerStats = {};
-            appData.customers.forEach(customer => {
-                const customerOrders = appData.orders.filter(order => order.customerId === customer.id && order.status !== 'cancelled');
-                if (customerOrders.length > 0) {
-                    let totalSpent = 0;
-                    customerOrders.forEach(order => totalSpent += calculateOrderTotal(order));
-                    customerStats[customer.id] = {
-                        name: customer.name,
-                        phone: customer.phone || 'No tiene',
-                        orders: customerOrders.length,
-                        totalSpent: totalSpent,
-                        avgOrder: totalSpent / customerOrders.length
-                    };
-                }
-            });
-            
-            const topCustomers = Object.values(customerStats).sort((a, b) => b.totalSpent - a.totalSpent).slice(0, 10);
-            
-            let html = `
-                <div class="chart-container">
-                    <h4>Top 10 Clientes por Valor</h4>
-                    <div style="overflow-x: auto; margin-top: 20px;">
-                        <table style="width: 100%;">
-                            <thead><tr><th>Cliente</th><th>Teléfono</th><th>Órdenes</th><th>Total Gastado</th><th>Promedio por Orden</th></tr></thead>
-                            <tbody>`;
-            
-            topCustomers.forEach((customer, index) => {
-                html += `<tr><td>${index + 1}. ${customer.name}</td><td>${customer.phone}</td><td>${customer.orders}</td><td>$${customer.totalSpent.toFixed(2)}</td><td>$${customer.avgOrder.toFixed(2)}</td></tr>`;
-            });
-            
-            html += `</tbody></table></div>
-                    <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                        <strong>Clientes recurrentes:</strong> ${topCustomers.length} clientes han realizado más de una orden
-                    </div>
-                </div>`;
-            return html;
-        }
-
-        function generateFinancialReport() {
-            let totalRevenue = 0, completedOrders = 0, cancelledOrders = 0, pendingOrders = 0;
-            appData.orders.forEach(order => {
-                const orderTotal = calculateOrderTotal(order);
-                if (order.status === 'completed') {
-                    totalRevenue += orderTotal;
-                    completedOrders++;
-                } else if (order.status === 'cancelled') {
-                    cancelledOrders++;
-                } else if (order.status === 'process') {
-                    pendingOrders++;
-                }
-            });
-            
-            const ivaAmount = totalRevenue * (appData.settings.ivaRate / (1 + appData.settings.ivaRate));
-            const netRevenue = totalRevenue - ivaAmount;
-            
-            return `
-                <div class="chart-container">
-                    <h4>Estado Financiero General</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--success), #218838); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">$${totalRevenue.toFixed(2)}</div><div>Ingresos Totales</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #6c757d, #545b62); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">$${ivaAmount.toFixed(2)}</div><div>IVA Recaudado</div>
-                        </div>
-                        <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, var(--info), #138496); color: white; border-radius: var(--border-radius);">
-                            <div style="font-size: 24px; font-weight: bold;">$${netRevenue.toFixed(2)}</div><div>Ingreso Neto</div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin-top: 30px;">Estadísticas de Órdenes</h4>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px;">
-                        <div style="text-align: center; padding: 15px; background-color: #d4edda; color: #155724; border-radius: var(--border-radius);">
-                            <div style="font-size: 20px; font-weight: bold;">${completedOrders}</div><div>Completadas</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background-color: #fff3cd; color: #856404; border-radius: var(--border-radius);">
-                            <div style="font-size: 20px; font-weight: bold;">${pendingOrders}</div><div>En Proceso</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background-color: #f8d7da; color: #721c24; border-radius: var(--border-radius);">
-                            <div style="font-size: 20px; font-weight: bold;">${cancelledOrders}</div><div>Canceladas</div>
-                        </div>
-                        <div style="text-align: center; padding: 15px; background-color: #d1ecf1; color: #0c5460; border-radius: var(--border-radius);">
-                            <div style="font-size: 20px; font-weight: bold;">${appData.orders.length}</div><div>Total</div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="margin-top: 30px;">Análisis de Rentabilidad</h4>
-                    <div style="margin-top: 20px; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                        <div style="margin-bottom: 10px;"><strong>Margen estimado:</strong> ${(netRevenue > 0 ? 'Positivo' : 'Negativo')}</div>
-                        <div style="margin-bottom: 10px;"><strong>Órdenes por día promedio:</strong> ${(completedOrders / 30).toFixed(1)} (últimos 30 días)</div>
-                        <div><strong>Proyección mensual:</strong> $${(totalRevenue * 30 / completedOrders || 0).toFixed(2)}</div>
-                    </div>
-                </div>`;
-        }
-
-        function generateTrendsReport() {
-            const now = new Date();
-            const last7Days = [];
-            for (let i = 6; i >= 0; i--) {
-                const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
-                last7Days.push(date.toISOString().split('T')[0]);
-            }
-            
-            const dailyData = {};
-            last7Days.forEach(date => dailyData[date] = { orders: 0, revenue: 0, items: 0 });
-            
-            appData.orders.forEach(order => {
-                if (order.status === 'completed') {
-                    const orderDate = new Date(order.date).toISOString().split('T')[0];
-                    if (dailyData[orderDate]) {
-                        dailyData[orderDate].orders++;
-                        dailyData[orderDate].revenue += calculateOrderTotal(order);
-                        order.items.forEach(item => dailyData[orderDate].items += item.quantity);
-                    }
-                }
-            });
-            
-            let html = `
-                <div class="chart-container">
-                    <h4>Tendencias de Ventas (Últimos 7 días)</h4>
-                    <div style="overflow-x: auto; margin-top: 20px;">
-                        <table style="width: 100%;"><thead><tr><th>Fecha</th><th>Órdenes</th><th>Ingresos</th><th>Productos</th><th>Tendencia</th></tr></thead><tbody>`;
-            
-            last7Days.forEach(date => {
-                const data = dailyData[date];
-                const dateStr = new Date(date).toLocaleDateString('es-MX', { weekday: 'short', day: 'numeric' });
-                html += `<tr><td>${dateStr}</td><td>${data.orders}</td><td>$${data.revenue.toFixed(2)}</td><td>${data.items}</td>
-                        <td><div style="display: flex; align-items: center; gap: 5px;">${data.orders > 0 ? '<i class="fas fa-arrow-up text-success"></i><span>Activo</span>' : '<i class="fas fa-minus text-secondary"></i><span>Sin ventas</span>'}</div></td></tr>`;
-            });
-            
-            html += `</tbody></table></div>
-                    <h4 style="margin-top: 30px;">Recomendaciones</h4>
-                    <div style="margin-top: 20px; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius);">
-                        <ul style="margin-bottom: 0;">
-                            <li>Días con más ventas: ${getBestSellingDay(dailyData)}</li>
-                            <li>Promedio diario: $${getDailyAverage(dailyData).toFixed(2)}</li>
-                            <li>Productos por orden promedio: ${getItemsPerOrder(dailyData).toFixed(1)}</li>
-                            <li>Recomendación: ${getRecommendation(dailyData)}</li>
-                        </ul>
-                    </div>
-                </div>`;
-            return html;
-        }
-
-        function getBestSellingDay(dailyData) {
-            let bestDay = '', bestRevenue = 0;
-            Object.keys(dailyData).forEach(date => {
-                if (dailyData[date].revenue > bestRevenue) {
-                    bestRevenue = dailyData[date].revenue;
-                    bestDay = new Date(date).toLocaleDateString('es-MX', { weekday: 'long' });
-                }
-            });
-            return bestDay || 'No hay datos suficientes';
-        }
-
-        function getDailyAverage(dailyData) {
-            const revenues = Object.values(dailyData).map(d => d.revenue);
-            return revenues.reduce((sum, rev) => sum + rev, 0) / revenues.length;
-        }
-
-        function getItemsPerOrder(dailyData) {
-            let totalItems = 0, totalOrders = 0;
-            Object.values(dailyData).forEach(data => {
-                totalItems += data.items;
-                totalOrders += data.orders;
-            });
-            return totalOrders > 0 ? totalItems / totalOrders : 0;
-        }
-
-        function getRecommendation(dailyData) {
-            const revenues = Object.values(dailyData).map(d => d.revenue);
-            const avgRevenue = revenues.reduce((sum, rev) => sum + rev, 0) / revenues.length;
-            const minRevenue = Math.min(...revenues);
-            const maxRevenue = Math.max(...revenues);
-            
-            if (maxRevenue - minRevenue > avgRevenue * 0.5) {
-                return 'Considera promociones en días de baja venta';
-            } else if (avgRevenue < 100) {
-                return 'Podrías implementar combos para aumentar el ticket promedio';
-            } else {
-                return 'Las ventas son estables, considera expandir el horario o menú';
-            }
-        }
-
-        function exportReport(type) {
-            showNotification('Función de exportación de PDF en desarrollo', 'info');
-        }
-
-        function printReport() {
-            window.print();
-        }
-
-        // ========== FUNCIONES UTILITARIAS ==========
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? { r: parseInt(result[1], 16), g: parseInt(result[2], 16), b: parseInt(result[3], 16) } : { r: 255, g: 107, b: 53 };
-        }
-
-        function adjustColor(hex, amount) {
-            const num = parseInt(hex.replace("#", ""), 16);
-            const r = Math.max(0, Math.min(255, ((num >> 16) + amount)));
-            const g = Math.max(0, Math.min(255, ((num >> 8 & 0x00FF) + amount)));
-            const b = Math.max(0, Math.min(255, ((num & 0x0000FF) + amount)));
-            return "#" + (b | (g << 8) | (r << 16)).toString(16).padStart(6, '0');
-        }
-
-        // ========== FUNCIONES DE GESTIÓN DE DATOS ==========
-        function renderOrders() {
-            const ordersTableBody = elements.ordersTableBody;
-            const emptyOrders = document.getElementById('emptyOrders');
-            
-            if (appData.orders.length === 0) {
-                ordersTableBody.innerHTML = '';
-                emptyOrders.style.display = 'block';
-                return;
-            }
-            
-            emptyOrders.style.display = 'none';
-            const sortedOrders = [...appData.orders].sort((a, b) => new Date(b.date) - new Date(a.date));
-            let html = '';
-            sortedOrders.forEach(order => {
-                const customer = appData.customers.find(c => c.id === order.customerId) || { name: 'Cliente no encontrado' };
-                const total = calculateOrderTotal(order);
-                const statusClass = `status-${order.status}`;
-                const statusText = order.status === 'process' ? 'En proceso' : order.status === 'completed' ? 'Completada' : 'Cancelada';
-                html += `<tr><td>${order.id}</td><td>${customer.name}</td><td>${order.items.length} productos</td><td>$${total.toFixed(2)}</td>
-                        <td><span class="status ${statusClass}">${statusText}</span></td><td>${formatDate(order.date)}</td>
-                        <td class="actions"><button class="btn btn-sm btn-secondary" onclick="viewOrderDetail('${order.id}')"><i class="fas fa-eye"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteOrder('${order.id}')"><i class="fas fa-trash"></i></button>
-                        ${order.status === 'process' ? `<button class="btn btn-sm btn-success" onclick="completeOrder('${order.id}')"><i class="fas fa-check"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="cancelOrder('${order.id}')"><i class="fas fa-times"></i></button>` : ''}</td></tr>`;
-            });
-            ordersTableBody.innerHTML = html;
-        }
-
-        function renderProducts() {
-            const productsGrid = elements.productsGrid;
-            const emptyProducts = document.getElementById('emptyProducts');
-            
-            if (appData.products.length === 0) {
-                productsGrid.innerHTML = '';
-                emptyProducts.style.display = 'block';
-                return;
-            }
-            
-            emptyProducts.style.display = 'none';
-            let html = '';
-            appData.products.forEach(product => {
-                html += `<div class="product-card" data-id="${product.id}"><div class="product-img">${product.image ? 
-                    `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">` : 
-                    `<i class="fas fa-hamburger"></i>`}</div><div class="product-info"><div class="product-name">${product.name}</div>
-                    <div class="product-price">$${product.price.toFixed(2)}</div><div style="margin-top: 10px; display: flex; gap: 5px;">
-                    <button class="btn btn-sm btn-secondary" onclick="editProduct('${product.id}')" style="flex:1;"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-sm btn-danger" onclick="deleteProduct('${product.id}')" style="flex:1;"><i class="fas fa-trash"></i></button></div></div></div>`;
-            });
-            productsGrid.innerHTML = html;
-        }
-
-        function renderCustomers() {
-            const customersTableBody = elements.customersTableBody;
-            const emptyCustomers = document.getElementById('emptyCustomers');
-            
-            if (appData.customers.length === 0) {
-                customersTableBody.innerHTML = '';
-                emptyCustomers.style.display = 'block';
-                return;
-            }
-            
-            emptyCustomers.style.display = 'none';
-            let html = '';
-            appData.customers.forEach(customer => {
-                const orderCount = appData.orders.filter(order => order.customerId === customer.id).length;
-                html += `<tr><td>${customer.name}</td><td>${customer.phone || '-'}</td><td>${orderCount} órdenes</td>
-                        <td class="actions"><button class="btn btn-sm btn-secondary" onclick="editCustomer('${customer.id}')"><i class="fas fa-edit"></i></button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteCustomer('${customer.id}')"><i class="fas fa-trash"></i></button></td></tr>`;
-            });
-            customersTableBody.innerHTML = html;
-        }
-
-        // ========== FUNCIONES DE MODALES ==========
-        function openProductModal(productId = null) {
-            editingProductId = productId;
-            const modalTitle = document.getElementById('productModalTitle');
-            const form = elements.productForm;
-            
-            if (productId) {
-                modalTitle.textContent = 'Editar Producto';
-                const product = appData.products.find(p => p.id === productId);
-                if (product) {
-                    document.getElementById('productId').value = product.id;
-                    document.getElementById('productName').value = product.name;
-                    document.getElementById('productPrice').value = product.price;
-                    document.getElementById('productImage').value = product.image || '';
-                }
-            } else {
-                modalTitle.textContent = 'Nuevo Producto';
-                form.reset();
-                document.getElementById('productId').value = '';
-            }
-            elements.productModal.classList.add('active');
-        }
-
-        function saveProduct(e) {
-            e.preventDefault();
-            const id = document.getElementById('productId').value || generateId();
-            const name = document.getElementById('productName').value;
-            const price = parseFloat(document.getElementById('productPrice').value);
-            const image = document.getElementById('productImage').value;
-            
-            if (!name || isNaN(price)) {
-                showNotification('Por favor, complete todos los campos requeridos', 'error');
-                return;
-            }
-            
-            const product = { id, name, price, image };
-            if (editingProductId) {
-                const index = appData.products.findIndex(p => p.id === editingProductId);
-                if (index !== -1) appData.products[index] = product;
-            } else {
-                appData.products.push(product);
-            }
-            
-            saveAppData();
-            renderProducts();
-            closeModal(elements.productModal);
-            showNotification(`Producto ${editingProductId ? 'actualizado' : 'agregado'} correctamente`);
-            if (elements.orderModal.classList.contains('active') && currentStep >= 2) {
-                renderOrderProducts();
-            }
-        }
-
-        function deleteProduct(productId) {
-            if (confirm('¿Está seguro de eliminar este producto?')) {
-                appData.products = appData.products.filter(p => p.id !== productId);
-                saveAppData();
-                renderProducts();
-                showNotification('Producto eliminado correctamente');
-            }
-        }
-
-        function openCustomerModal(customerId = null) {
-            editingCustomerId = customerId;
-            const modalTitle = document.getElementById('customerModalTitle');
-            const form = elements.customerForm;
-            
-            if (customerId) {
-                modalTitle.textContent = 'Editar Cliente';
-                const customer = appData.customers.find(c => c.id === customerId);
-                if (customer) {
-                    document.getElementById('customerId').value = customer.id;
-                    document.getElementById('customerName').value = customer.name;
-                    document.getElementById('customerPhone').value = customer.phone || '';
-                }
-            } else {
-                modalTitle.textContent = 'Nuevo Cliente';
-                form.reset();
-                document.getElementById('customerId').value = '';
-            }
-            elements.customerModal.classList.add('active');
-        }
-
-        function saveCustomer(e) {
-            e.preventDefault();
-            const id = document.getElementById('customerId').value || generateId();
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-            
-            if (!name) {
-                showNotification('Por favor, complete el nombre del cliente', 'error');
-                return;
-            }
-            
-            const customer = { id, name, phone };
-            if (editingCustomerId) {
-                const index = appData.customers.findIndex(c => c.id === editingCustomerId);
-                if (index !== -1) appData.customers[index] = customer;
-            } else {
-                appData.customers.push(customer);
-            }
-            
-            saveAppData();
-            renderCustomers();
-            closeModal(elements.customerModal);
-            showNotification(`Cliente ${editingCustomerId ? 'actualizado' : 'agregado'} correctamente`);
-            if (elements.orderModal.classList.contains('active')) {
-                renderCustomerSelector();
-            }
-        }
-
-        function deleteCustomer(customerId) {
-            const hasOrders = appData.orders.some(order => order.customerId === customerId);
-            const message = hasOrders ? 'Este cliente tiene órdenes asociadas. ¿Está seguro de eliminar?' : '¿Está seguro de eliminar este cliente?';
-            if (!confirm(message)) return;
-            
-            appData.customers = appData.customers.filter(c => c.id !== customerId);
-            saveAppData();
-            renderCustomers();
-            showNotification('Cliente eliminado correctamente');
-        }
-
-        function openOrderModal() {
-            resetOrderModal();
-            elements.orderModal.classList.add('active');
-            renderCustomerSelector();
-        }
-
-        function resetOrderModal() {
-            currentStep = 1;
-            selectedCustomer = null;
-            selectedProducts = {};
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('step2').classList.remove('completed');
-            document.getElementById('step3').classList.remove('completed');
-            document.getElementById('orderStep1').style.display = 'block';
-            document.getElementById('orderStep2').style.display = 'none';
-            document.getElementById('orderStep3').style.display = 'none';
-            document.getElementById('selectCustomerBtn').disabled = true;
-            updateOrderSummary();
-        }
-
-        function renderCustomerSelector() {
-            const customerSelector = elements.customerSelector;
-            if (appData.customers.length === 0) {
-                customerSelector.innerHTML = '<p>No hay clientes registrados. Crea uno nuevo.</p>';
-                return;
-            }
-            
-            let html = '';
-            appData.customers.forEach(customer => {
-                const isSelected = selectedCustomer && selectedCustomer.id === customer.id;
-                html += `<div class="customer-card ${isSelected ? 'selected' : ''}" data-id="${customer.id}">
-                        <div class="customer-name">${customer.name}</div><div class="customer-phone">${customer.phone || 'Sin teléfono'}</div></div>`;
-            });
-            customerSelector.innerHTML = html;
-            document.querySelectorAll('.customer-card').forEach(card => {
-                card.addEventListener('click', () => selectCustomer(card.getAttribute('data-id')));
-            });
-        }
-
-        function selectCustomer(customerId) {
-            const customer = appData.customers.find(c => c.id === customerId);
-            if (customer) {
-                selectedCustomer = customer;
-                document.querySelectorAll('.customer-card').forEach(card => {
-                    if (card.getAttribute('data-id') === customerId) card.classList.add('selected');
-                    else card.classList.remove('selected');
-                });
-                document.getElementById('selectCustomerBtn').disabled = false;
-            }
-        }
-
-        function goToStep2() {
-            if (!selectedCustomer) {
-                showNotification('Por favor, seleccione un cliente', 'error');
-                return;
-            }
-            currentStep = 2;
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step1').classList.add('completed');
-            document.getElementById('step2').classList.add('active');
-            document.getElementById('orderStep1').style.display = 'none';
-            document.getElementById('orderStep2').style.display = 'block';
-            renderOrderProducts();
-        }
-
-        function renderOrderProducts() {
-            const orderProductsGrid = elements.orderProductsGrid;
-            if (appData.products.length === 0) {
-                orderProductsGrid.innerHTML = '<p>No hay productos disponibles. Agrega productos primero.</p>';
-                return;
-            }
-            
-            let html = '';
-            appData.products.forEach(product => {
-                const quantity = selectedProducts[product.id] ? selectedProducts[product.id].quantity : 0;
-                const isSelected = quantity > 0;
-                html += `<div class="product-card ${isSelected ? 'selected' : ''}" data-id="${product.id}"><div class="product-img">${product.image ? 
-                    `<img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;">` : 
-                    `<i class="fas fa-hamburger"></i>`}</div><div class="product-info"><div class="product-name">${product.name}</div>
-                    <div class="product-price">$${product.price.toFixed(2)}</div><div class="quantity-control" style="margin-top: 10px;">
-                    <button class="quantity-btn" onclick="decreaseProductQuantity('${product.id}')">-</button>
-                    <input type="number" class="quantity-input" value="${quantity}" min="0" readonly>
-                    <button class="quantity-btn" onclick="increaseProductQuantity('${product.id}')">+</button></div></div></div>`;
-            });
-            orderProductsGrid.innerHTML = html;
-            updateSelectedProductsList();
-            updateOrderSummary();
-        }
-
-        function increaseProductQuantity(productId) {
-            if (!selectedProducts[productId]) selectedProducts[productId] = { productId, quantity: 0, price: 0 };
-            selectedProducts[productId].quantity++;
-            const product = appData.products.find(p => p.id === productId);
-            if (product) selectedProducts[productId].price = product.price;
-            updateProductCard(productId);
-            updateSelectedProductsList();
-            updateOrderSummary();
-        }
-
-        function decreaseProductQuantity(productId) {
-            if (selectedProducts[productId] && selectedProducts[productId].quantity > 0) {
-                selectedProducts[productId].quantity--;
-                if (selectedProducts[productId].quantity === 0) delete selectedProducts[productId];
-                updateProductCard(productId);
-                updateSelectedProductsList();
-                updateOrderSummary();
-            }
-        }
-
-        function updateProductCard(productId) {
-            const card = document.querySelector(`.product-card[data-id="${productId}"]`);
-            if (card) {
-                const quantity = selectedProducts[productId] ? selectedProducts[productId].quantity : 0;
-                const input = card.querySelector('.quantity-input');
-                if (input) input.value = quantity;
-                if (quantity > 0) card.classList.add('selected');
-                else card.classList.remove('selected');
-            }
-        }
-
-        function updateSelectedProductsList() {
-            const orderSelectedProducts = elements.orderSelectedProducts;
-            const productsWithQuantity = Object.values(selectedProducts).filter(item => item.quantity > 0);
-            
-            if (productsWithQuantity.length === 0) {
-                orderSelectedProducts.innerHTML = '<p>No hay productos seleccionados. Agrega productos a la orden.</p>';
-                return;
-            }
-            
-            let html = '';
-            productsWithQuantity.forEach(item => {
-                const product = appData.products.find(p => p.id === item.productId);
-                if (product) {
-                    const subtotal = item.quantity * product.price;
-                    html += `<div class="product-order-item"><div class="product-order-info"><div><strong>${product.name}</strong></div>
-                            <div>$${product.price.toFixed(2)} x ${item.quantity} = $${subtotal.toFixed(2)}</div></div>
-                            <div><button class="btn btn-sm btn-danger" onclick="removeProductFromOrder('${item.productId}')"><i class="fas fa-trash"></i></button></div></div>`;
-                }
-            });
-            orderSelectedProducts.innerHTML = html;
-        }
-
-        function removeProductFromOrder(productId) {
-            delete selectedProducts[productId];
-            updateProductCard(productId);
-            updateSelectedProductsList();
-            updateOrderSummary();
-        }
-
-        function updateOrderSummary() {
-            let subtotal = 0;
-            Object.values(selectedProducts).forEach(item => {
-                const product = appData.products.find(p => p.id === item.productId);
-                if (product) subtotal += item.quantity * product.price;
-            });
-            
-            const iva = subtotal * appData.settings.ivaRate;
-            const total = subtotal + iva;
-            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('iva').textContent = `$${iva.toFixed(2)}`;
-            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
-            document.getElementById('confirmSubtotal').textContent = `$${subtotal.toFixed(2)}`;
-            document.getElementById('confirmIva').textContent = `$${iva.toFixed(2)}`;
-            document.getElementById('confirmTotal').textContent = `$${total.toFixed(2)}`;
-            document.getElementById('goToStep3Btn').disabled = subtotal === 0;
-        }
-
-        function goToStep3() {
-            const productsWithQuantity = Object.values(selectedProducts).filter(item => item.quantity > 0);
-            if (productsWithQuantity.length === 0) {
-                showNotification('Por favor, agregue al menos un producto a la orden', 'error');
-                return;
-            }
-            
-            currentStep = 3;
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step2').classList.add('completed');
-            document.getElementById('step3').classList.add('active');
-            document.getElementById('orderStep2').style.display = 'none';
-            document.getElementById('orderStep3').style.display = 'block';
-            updateConfirmationInfo();
-        }
-
-        function updateConfirmationInfo() {
-            document.getElementById('confirmCustomerName').textContent = selectedCustomer.name;
-            document.getElementById('confirmCustomerPhone').textContent = selectedCustomer.phone || '-';
-            const confirmProductsList = document.getElementById('confirmProductsList');
-            let html = '';
-            Object.values(selectedProducts).forEach(item => {
-                if (item.quantity > 0) {
-                    const product = appData.products.find(p => p.id === item.productId);
-                    if (product) {
-                        const subtotal = item.quantity * product.price;
-                        html += `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
-                                <div>${product.name} (${item.quantity} x $${product.price.toFixed(2)})</div><div>$${subtotal.toFixed(2)}</div></div>`;
-                    }
-                }
-            });
-            confirmProductsList.innerHTML = html;
-        }
-
-        function goToStep1() {
-            currentStep = 1;
-            document.getElementById('step1').classList.add('active');
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step2').classList.remove('completed');
-            document.getElementById('orderStep1').style.display = 'block';
-            document.getElementById('orderStep2').style.display = 'none';
-        }
-
-        function goToStep2FromStep3() {
-            currentStep = 2;
-            document.getElementById('step2').classList.add('active');
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById('step3').classList.remove('completed');
-            document.getElementById('orderStep2').style.display = 'block';
-            document.getElementById('orderStep3').style.display = 'none';
-        }
-
-        function saveOrder() {
-            const productsWithQuantity = Object.values(selectedProducts).filter(item => item.quantity > 0);
-            if (productsWithQuantity.length === 0) {
-                showNotification('Por favor, agregue al menos un producto a la orden', 'error');
-                return;
-            }
-            
-            const orderId = generateId();
-            const order = {
-                id: orderId,
-                customerId: selectedCustomer.id,
-                items: productsWithQuantity.map(item => ({ productId: item.productId, quantity: item.quantity, price: item.price })),
-                status: 'process',
-                date: new Date().toISOString()
-            };
-            
-            appData.orders.push(order);
-            saveAppData();
-            closeModal(elements.orderModal);
-            showNotification(`Orden #${orderId} creada correctamente`);
-            switchTab('orders');
-            setTimeout(() => generateOrderPDF(orderId), 500);
-        }
-
-        function viewOrderDetail(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order) return;
-            
-            const customer = appData.customers.find(c => c.id === order.customerId) || { name: 'Cliente no encontrado', phone: '' };
-            const total = calculateOrderTotal(order);
-            document.getElementById('detailOrderId').textContent = orderId;
-            
-            let html = `<div class="order-detail-card"><h4>Cliente: ${customer.name}</h4>
-                    <p>Teléfono: ${customer.phone || '-'}</p><p>Fecha: ${formatDate(order.date)}</p>
-                    <p>Estado: <span class="status status-${order.status}">${order.status === 'process' ? 'En proceso' : order.status === 'completed' ? 'Completada' : 'Cancelada'}</span></p>
-                    <h4 style="margin-top: 20px;">Productos:</h4>`;
-            
-            order.items.forEach(item => {
-                const product = appData.products.find(p => p.id === item.productId) || { name: 'Producto no encontrado', price: 0 };
-                const itemTotal = item.quantity * item.price;
-                html += `<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee;">
-                        <div>${product.name} (${item.quantity} x $${item.price.toFixed(2)})</div><div>$${itemTotal.toFixed(2)}</div></div>`;
-            });
-            
-            const subtotal = total / (1 + appData.settings.ivaRate);
-            const iva = subtotal * appData.settings.ivaRate;
-            html += `<div style="margin-top: 20px;">
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><div>Subtotal:</div><div>$${subtotal.toFixed(2)}</div></div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0;"><div>IVA (${(appData.settings.ivaRate * 100)}%):</div><div>$${iva.toFixed(2)}</div></div>
-                    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-weight: bold; font-size: 18px; color: var(--primary);">
-                    <div>Total:</div><div>$${total.toFixed(2)}</div></div></div></div>
-                    <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="generateOrderPDF('${orderId}')"><i class="fas fa-file-pdf"></i> Generar PDF</button>
-                    ${order.status === 'process' ? `<button class="btn btn-success" onclick="completeOrder('${orderId}')"><i class="fas fa-check"></i> Marcar como Completada</button>
-                    <button class="btn btn-danger" onclick="cancelOrder('${orderId}')"><i class="fas fa-times"></i> Cancelar Orden</button>` : ''}</div>`;
-            
-            document.getElementById('orderDetailContent').innerHTML = html;
-            elements.orderDetailModal.classList.add('active');
-        }
-
-        function completeOrder(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (order) {
-                order.status = 'completed';
-                saveAppData();
-                renderOrders();
-                if (elements.orderDetailModal.classList.contains('active')) viewOrderDetail(orderId);
-                showNotification(`Orden #${orderId} marcada como completada`);
-            }
-        }
-
-        function cancelOrder(orderId) {
-            if (confirm('¿Está seguro de cancelar esta orden?')) {
-                const order = appData.orders.find(o => o.id === orderId);
-                if (order) {
-                    order.status = 'cancelled';
-                    saveAppData();
-                    renderOrders();
-                    if (elements.orderDetailModal.classList.contains('active')) viewOrderDetail(orderId);
-                    showNotification(`Orden #${orderId} cancelada`);
-                }
-            }
-        }
-
-        function deleteOrder(orderId) {
-            if (confirm('¿Está seguro de eliminar esta orden?')) {
-                appData.orders = appData.orders.filter(o => o.id !== orderId);
-                saveAppData();
-                renderOrders();
-                showNotification('Orden eliminada correctamente');
-            }
-        }
-
-        function generateOrderPDF(orderId) {
-            const order = appData.orders.find(o => o.id === orderId);
-            if (!order) return;
-            
-            const customer = appData.customers.find(c => c.id === order.customerId) || { name: 'Cliente no encontrado', phone: '' };
-            const total = calculateOrderTotal(order);
-            const subtotal = total / (1 + appData.settings.ivaRate);
-            const iva = subtotal * appData.settings.ivaRate;
-            
-            const pdfContent = `<div style="font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto;">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <div style="font-size: 24px; font-weight: bold; color: #FF6B35;">${appData.business.name}</div>
-                    <div style="margin-top: 10px;">${appData.business.address || ''}</div>
-                    <div>WhatsApp: ${appData.business.whatsapp}</div>${appData.business.rfc ? `<div>RFC: ${appData.business.rfc}</div>` : ''}
-                </div>
-                <div style="border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 20px;">
-                    <h1 style="margin: 0; color: #004E89;">COTIZACIÓN #${orderId}</h1>
-                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                        <div><div><strong>Fecha:</strong> ${formatDate(order.date)}</div>
-                        <div><strong>Estado:</strong> ${order.status === 'process' ? 'En proceso' : order.status === 'completed' ? 'Completada' : 'Cancelada'}</div></div>
-                        <div><div><strong>Cliente:</strong> ${customer.name}</div><div><strong>Teléfono:</strong> ${customer.phone || '-'}</div></div>
-                    </div>
-                </div>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-                    <thead><tr style="background-color: #f8f9fa;"><th style="padding: 12px; text-align: left; border-bottom: 2px solid #ddd;">Producto</th>
-                    <th style="padding: 12px; text-align: right; border-bottom: 2px solid #ddd;">Precio Unitario</th>
-                    <th style="padding: 12px; text-align: center; border-bottom: 2px solid #ddd;">Cantidad</th>
-                    <th style="padding: 12px; text-align: right; border-bottom: 2px solid #ddd;">Subtotal</th></tr></thead><tbody>`;
-            
-            let itemsHTML = '';
-            order.items.forEach(item => {
-                const product = appData.products.find(p => p.id === item.productId) || { name: 'Producto no encontrado', price: 0 };
-                const itemTotal = item.quantity * item.price;
-                itemsHTML += `<tr><td style="padding: 12px; border-bottom: 1px solid #ddd;">${product.name}</td>
-                <td style="padding: 12px; text-align: right; border-bottom: 1px solid #ddd;">$${item.price.toFixed(2)}</td>
-                <td style="padding: 12px; text-align: center; border-bottom: 1px solid #ddd;">${item.quantity}</td>
-                <td style="padding: 12px; text-align: right; border-bottom: 1px solid #ddd;">$${itemTotal.toFixed(2)}</td></tr>`;
-            });
-            
-            const pdfFooter = `</tbody></table><div style="margin-top: 30px; float: right; width: 300px;">
-                <div style="display: flex; justify-content: space-between; padding: 10px 0;"><div>Subtotal:</div><div>$${subtotal.toFixed(2)}</div></div>
-                <div style="display: flex; justify-content: space-between; padding: 10px 0;"><div>IVA (${(appData.settings.ivaRate * 100)}%):</div><div>$${iva.toFixed(2)}</div></div>
-                <div style="display: flex; justify-content: space-between; padding: 15px 0; font-weight: bold; font-size: 18px; border-top: 2px solid #333;">
-                <div>TOTAL:</div><div>$${total.toFixed(2)}</div></div></div>
-                <div style="clear: both; margin-top: 100px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; font-size: 12px; color: #666;">
-                <div>${appData.business.name} • ${appData.business.whatsapp} • ${appData.business.address || ''}</div><div>¡Gracias por su preferencia!</div></div></div>`;
-            
-            const fullPdfContent = pdfContent + itemsHTML + pdfFooter;
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`<!DOCTYPE html><html><head><title>Cotización #${orderId}</title>
-                <style>body { font-family: Arial, sans-serif; margin: 0; padding: 20px; } @media print { body { padding: 0; } }</style></head>
-                <body>${fullPdfContent}<script>window.onload = function() { window.print(); };<\/script></body></html>`);
-            printWindow.document.close();
-            showNotification('PDF generado correctamente. Se abrirá en una nueva ventana para imprimir.');
-        }
-
-        function openConfigModal() {
-            document.getElementById('configBusinessName').value = appData.business.name;
-            document.getElementById('configLogo').value = appData.business.logo || '';
-            document.getElementById('configWhatsApp').value = appData.business.whatsapp;
-            document.getElementById('configAddress').value = appData.business.address || '';
-            document.getElementById('configRFC').value = appData.business.rfc || '';
-            
-            const logoPreview = document.getElementById('logoPreview');
-            if (appData.business.logo) {
-                logoPreview.innerHTML = `<img src="${appData.business.logo}" alt="Logo">`;
-            } else {
-                logoPreview.innerHTML = `<span>${appData.business.name.charAt(0)}</span>`;
-            }
-            
-            initializeColorControls();
-            elements.configModal.classList.add('active');
-        }
-
-        function initializeColorControls() {
-            const colors = appData.settings.colors;
-            document.getElementById('colorPrimary').value = colors.primary;
-            document.getElementById('colorPrimaryText').value = colors.primary;
-            document.getElementById('colorSecondary').value = colors.secondary;
-            document.getElementById('colorSecondaryText').value = colors.secondary;
-            document.getElementById('colorBackground').value = colors.background;
-            document.getElementById('colorBackgroundText').value = colors.background;
-            document.getElementById('colorText').value = colors.text;
-            document.getElementById('colorTextText').value = colors.text;
-            document.getElementById('customColorPreview').style.backgroundColor = colors.primary;
-            
-            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
-            const currentTheme = appData.settings.colorTheme;
-            const themeOption = document.querySelector(`.color-option[onclick*="${currentTheme}"]`);
-            if (themeOption) themeOption.classList.add('selected');
-            if (currentTheme === 'custom') document.getElementById('customColorControls').style.display = 'block';
-        }
-
-        function saveConfig(e) {
-            e.preventDefault();
-            appData.business.name = document.getElementById('configBusinessName').value;
-            appData.business.logo = document.getElementById('configLogo').value;
-            appData.business.whatsapp = document.getElementById('configWhatsApp').value;
-            appData.business.address = document.getElementById('configAddress').value;
-            appData.business.rfc = document.getElementById('configRFC').value;
-            saveAppData();
-            updateBusinessInfo();
-            closeModal(elements.configModal);
-            showNotification('Configuración guardada correctamente');
-        }
-
-        function saveWelcomeConfig(e) {
-            e.preventDefault();
-            appData.business.name = document.getElementById('welcomeBusinessName').value;
-            appData.business.whatsapp = document.getElementById('welcomeWhatsApp').value;
-            saveAppData();
-            updateBusinessInfo();
-            closeModal(elements.welcomeModal);
-            showNotification('¡Configuración completada! Ya puedes usar el sistema.');
-        }
-
-        function exportData() {
-            const dataStr = JSON.stringify(appData, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            const exportFileDefaultName = `snack-orders-backup-${new Date().toISOString().split('T')[0]}.json`;
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-            showNotification('Datos exportados correctamente');
-        }
-
-        function clearData() {
-            if (confirm('¿Está seguro de borrar todos los datos? Esta acción no se puede deshacer.')) {
-                localStorage.removeItem('snackOrdersData');
-                appData = {
-                    business: { name: "Snack Orders", logo: "", whatsapp: "+52 123 456 7890", address: "", rfc: "" },
-                    products: [], customers: [], orders: [],
-                    settings: { ivaRate: 0.16, currency: "MXN", colorTheme: "default", colors: {
-                        primary: "#FF6B35", secondary: "#004E89", background: "#f5f7fa", text: "#212529", cardBackground: "white", buttonText: "white"
-                    }}
-                };
-                renderAllData();
-                updateBusinessInfo();
-                showNotification('Todos los datos han sido borrados');
-            }
-        }
-
-        function closeModal(modal) {
-            modal.classList.remove('active');
-        }
-
-        function showNotification(message, type = 'success') {
-            elements.notificationText.textContent = message;
-            elements.notification.className = 'notification';
-            elements.notification.classList.add(type);
-            elements.notification.classList.add('show');
-            setTimeout(() => elements.notification.classList.remove('show'), 3000);
-        }
-
-        function calculateOrderTotal(order) {
-            let subtotal = 0;
-            order.items.forEach(item => subtotal += item.quantity * item.price);
-            return subtotal + (subtotal * appData.settings.ivaRate);
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-MX', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        }
-
-        // Funciones globales
-        window.editProduct = editProduct;
-        window.deleteProduct = deleteProduct;
-        window.editCustomer = editCustomer;
-        window.deleteCustomer = deleteCustomer;
-        window.viewOrderDetail = viewOrderDetail;
-        window.completeOrder = completeOrder;
-        window.cancelOrder = cancelOrder;
-        window.deleteOrder = deleteOrder;
-        window.generateOrderPDF = generateOrderPDF;
-        window.increaseProductQuantity = increaseProductQuantity;
-        window.decreaseProductQuantity = decreaseProductQuantity;
-        window.removeProductFromOrder = removeProductFromOrder;
-        window.generateReport = generateReport;
-        window.exportReport = exportReport;
-        window.printReport = printReport;
-        window.selectColorTheme = selectColorTheme;
-        window.applyCustomColors = applyCustomColors;
-    </script>
+<script src="modules/utilities.js"></script>
+<script src="modules/data-manager.js"></script>
+<script src="modules/ui-manager.js"></script>
+<script src="modules/products-manager.js"></script>
+<script src="modules/customers-manager.js"></script>
+<script src="modules/orders-manager.js"></script>
+<script src="modules/config-manager.js"></script>
+<script src="modules/inventory-manager.js"></script>
+<script src="modules/suppliers-manager.js"></script>
+<script src="modules/purchase-orders-manager.js"></script>
+<script src="modules/reports-manager.js"></script>
+<script src="modules/storage-cleaner.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
