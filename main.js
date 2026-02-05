@@ -1,10 +1,10 @@
+
 // Variables globales
 let currentStep = 1;
 let selectedCustomer = null;
 let selectedProducts = {};
 let editingProductId = null;
 let editingCustomerId = null;
-let editingOrderId = null;
 let currentReport = null;
 let importDataBuffer = null;
 let currentEditingRecipeProductId = null;
@@ -108,6 +108,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 100);
         });
     }
+
+    // Al inicio de tu main.js, después de DOMContentLoaded
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registrado:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Error registrando ServiceWorker:', error);
+      });
+  });
+}
     
     console.log('Sistema inicializado correctamente');
 });

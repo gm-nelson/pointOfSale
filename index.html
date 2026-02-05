@@ -951,46 +951,85 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- Paso 3: Confirmación -->
-                    <div id="orderStep3" class="order-step" style="display: none;">
-                        <h3>Confirmar orden</h3>
-                        <p>Revisa los detalles de la orden antes de guardar</p>
-                        
-                        <div class="order-detail-card">
-                            <h4>Cliente: <span id="confirmCustomerName">-</span></h4>
-                            <p>Teléfono: <span id="confirmCustomerPhone">-</span></p>
-                            
-                            <h4 style="margin-top: 20px;">Productos:</h4>
-                            <div id="confirmProductsList">
-                                <!-- Los productos confirmados se mostrarán aquí -->
-                            </div>
-                            
-                            <div class="order-summary" style="margin-top: 20px;">
-                                <div class="summary-row">
-                                    <span>Subtotal:</span>
-                                    <span id="confirmSubtotal">$0.00</span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>IVA (16%):</span>
-                                    <span id="confirmIva">$0.00</span>
-                                </div>
-                                <div class="summary-row total">
-                                    <span>Total:</span>
-                                    <span id="confirmTotal">$0.00</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                            <button class="btn btn-secondary" id="backToStep2Btn">
-                                <i class="fas fa-arrow-left"></i> Volver
-                            </button>
-                            <button class="btn btn-success" id="saveOrderBtn">
-                                <i class="fas fa-check"></i> Guardar Orden
-                            </button>
-                        </div>
-                    </div>
+<!-- Paso 3: Confirmación -->
+<div id="orderStep3" class="order-step" style="display: none;">
+    <h3>Confirmar orden</h3>
+    <p>Revisa los detalles de la orden antes de guardar</p>
+    
+    <div class="order-detail-card">
+        <h4>Cliente: <span id="confirmCustomerName">-</span></h4>
+        <p>Teléfono: <span id="confirmCustomerPhone">-</span></p>
+        <p>Método de Pago: <span id="confirmPaymentMethod">Efectivo</span></p>
+        
+        <h4 style="margin-top: 20px;">Productos:</h4>
+        <div id="confirmProductsList">
+            <!-- Los productos confirmados se mostrarán aquí -->
+        </div>
+        
+        <div class="order-summary" style="margin-top: 20px;">
+            <div class="summary-row">
+                <span>Subtotal:</span>
+                <span id="confirmSubtotal">$0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>IVA (16%):</span>
+                <span id="confirmIva">$0.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span id="confirmTotal">$0.00</span>
+            </div>
+        </div>
+        
+        <!-- Sección de método de pago -->
+        <div style="margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+            <h4 style="margin-bottom: 10px;">Método de Pago</h4>
+            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="paymentCash" name="paymentMethod" value="cash" checked 
+                           onchange="updateConfirmationInfo()">
+                    <label for="paymentCash" style="margin-left: 5px; cursor: pointer;">
+                        <i class="fas fa-money-bill-wave" style="color: #28a745; margin-right: 5px;"></i>
+                        Efectivo
+                    </label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="paymentCredit" name="paymentMethod" value="credit" 
+                           onchange="updateConfirmationInfo()">
+                    <label for="paymentCredit" style="margin-left: 5px; cursor: pointer;">
+                        <i class="fas fa-credit-card" style="color: #007bff; margin-right: 5px;"></i>
+                        Tarjeta de Crédito
+                    </label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="paymentDebit" name="paymentMethod" value="debit" 
+                           onchange="updateConfirmationInfo()">
+                    <label for="paymentDebit" style="margin-left: 5px; cursor: pointer;">
+                        <i class="fas fa-credit-card" style="color: #17a2b8; margin-right: 5px;"></i>
+                        Tarjeta de Débito
+                    </label>
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <input type="radio" id="paymentTransfer" name="paymentMethod" value="transfer" 
+                           onchange="updateConfirmationInfo()">
+                    <label for="paymentTransfer" style="margin-left: 5px; cursor: pointer;">
+                        <i class="fas fa-university" style="color: #6f42c1; margin-right: 5px;"></i>
+                        Transferencia
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <button class="btn btn-secondary" id="backToStep2Btn" onclick="goToStep2FromStep3()">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
+        <button class="btn btn-success" id="saveOrderBtn" onclick="saveOrder()">
+            <i class="fas fa-check"></i> Guardar Orden
+        </button>
+    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -1013,6 +1052,7 @@
                             <small>Recomendado: 200x200px, formato PNG o JPG</small>
                         </div>
                         
+                        
                         <div class="form-group">
                             <label for="configBusinessName">Nombre del negocio *</label>
                             <input type="text" id="configBusinessName" class="form-control" required>
@@ -1032,6 +1072,8 @@
                             <label for="configRFC">RFC (opcional)</label>
                             <input type="text" id="configRFC" class="form-control" placeholder="RFC para facturación">
                         </div>
+
+                        
                         
                         <hr style="margin: 30px 0;">
                         
@@ -1173,13 +1215,6 @@
             <i class="fas fa-sync-alt"></i> Recalcular
         </button>
     </div>
-</div>
-
-<hr style="margin: 30px 0;">
-<!-- Después de la sección "Uso de Almacenamiento", agrega esto: -->
-<h3 style="margin-top: 30px;">Gestor de Limpieza de Almacenamiento</h3>
-<div class="storage-cleaner">
-    <div class="cleaner-header">
         <h4>Análisis de datos almacenados</h4>
         <button class="btn btn-sm btn-secondary" id="refreshStorageAnalysisBtn">
             <i class="fas fa-sync-alt"></i> Reanalizar
